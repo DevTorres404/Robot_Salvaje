@@ -1,0 +1,6 @@
+# MakeCode build output
+built/
+*.uf2
+*.hex
+*.mkcd
+.pxt/
