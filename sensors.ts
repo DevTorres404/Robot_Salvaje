@@ -7,24 +7,23 @@ namespace RobotSoccer {
     }
 
     export class Sensors {
+        constructor(private hardware: RobotHardware) {}
+
         read(): SensorSnapshot {
-            // Solo el IR está confirmado por la documentación de construcción.
-            // Seleccione el puerto real al sustituir la vinculación infrarroja.
-            const infraredProximity = sensors.infrared1.proximity()
             return {
-                infraredProximity: infraredProximity,
-                colorDetected: false, // TODO_CONFIRM: sensor no confirmado
-                obstacleDetected: false, // TODO_CONFIRM: sensor no confirmado
-                touchPressed: false // TODO_CONFIRM: sensor no confirmado
+                infraredProximity: this.hardware.infraredProximity(),
+                colorDetected: false,
+                obstacleDetected: false,
+                touchPressed: false
             }
         }
 
         ballSeen(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= IR_BALL_SEEN_MAX
+            return snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
         }
 
         ballClose(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= IR_ATTACK_DISTANCE_MAX
+            return snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
         }
     }
 }

@@ -1,12 +1,12 @@
 namespace RobotSoccer {
     export class Movement {
-        constructor(private runtime: EV3Runtime) {}
+        constructor(private hardware: RobotHardware) {}
 
-        forward() { this.runtime.drive(DRIVE_SPEED, DRIVE_SPEED) }
-        reverse() { this.runtime.drive(-DRIVE_SPEED, -DRIVE_SPEED) }
-        turnLeft() { this.runtime.drive(-TURN_SPEED, TURN_SPEED) }
-        turnRight() { this.runtime.drive(TURN_SPEED, -TURN_SPEED) }
-        stop() { this.runtime.stopDrive() }
-        kick() { this.runtime.runAuxiliary(AUXILIARY_SPEED) }
+        forward() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
+        reverse() { this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED) }
+        turnLeft() { this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED) }
+        turnRight() { this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED) }
+        stop() { this.hardware.stopDrive() }
+        kick() { this.hardware.runAuxiliary(Config.AUXILIARY_SPEED) }
     }
 }

@@ -1,7 +1,7 @@
-let runtime = new RobotSoccer.EV3Runtime()
-let movement = new RobotSoccer.Movement(runtime)
-let sensorsRuntime = new RobotSoccer.Sensors()
-let stateMachine = new RobotSoccer.StateMachine()
+let hardware = new RobotSoccer.EV3RobotHardware()
+let movement = new RobotSoccer.Movement(hardware)
+let sensorsRuntime = new RobotSoccer.Sensors(hardware)
+let stateMachine = new RobotSoccer.StateMachine(hardware)
 let searchStrategy = new RobotSoccer.SearchStrategy()
 let attackStrategy = new RobotSoccer.AttackStrategy()
 let defenseStrategy = new RobotSoccer.DefenseStrategy()
@@ -9,7 +9,7 @@ let recoveryStrategy = new RobotSoccer.RecoveryStrategy()
 
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     stateMachine.transition(RobotSoccer.RobotState.STOP)
-    runtime.stopAll()
+    hardware.stopAll()
 })
 
 brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
@@ -29,5 +29,5 @@ forever(function () {
     } else if (stateMachine.current() == RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.run(snapshot, movement)
     }
-    pause(RobotSoccer.LOOP_INTERVAL_MS)
+    pause(RobotSoccer.Config.LOOP_INTERVAL_MS)
 })

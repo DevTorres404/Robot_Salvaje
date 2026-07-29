@@ -12,7 +12,7 @@ archivo .uf2
 Virtual Robot Toolkit o ladrillo EV3
 ```
 
-La adaptación conserva los conceptos de movimiento, sensores, estrategias y FSM, pero no incorpora capas de simulación ni de infraestructura ajenas a MakeCode. VRT ejecuta el `.uf2`; no es un adaptador incluido en el código.
+La adaptación conserva los conceptos de movimiento, sensores, estrategias y FSM. `config.ts` concentra la configuración física oficial y `hardware.ts` proporciona la frontera `RobotHardware` hacia MakeCode EV3; VRT ejecuta el `.uf2` y puede sustituir esa frontera en una futura adaptación.
 
 ## Mapeo de la FSM
 

@@ -12,13 +12,17 @@ namespace RobotSoccer {
 
     export class StateMachine {
         private state = RobotState.INIT
-        private enteredAt = control.millis()
+        private enteredAt: number
+
+        constructor(private hardware: RobotHardware) {
+            this.enteredAt = hardware.millis()
+        }
 
         current() { return this.state }
 
         transition(next: RobotState) {
             this.state = next
-            this.enteredAt = control.millis()
+            this.enteredAt = this.hardware.millis()
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
@@ -28,14 +32,14 @@ namespace RobotSoccer {
             if (this.state == RobotState.INIT) this.transition(RobotState.SEARCH)
             else if (this.state == RobotState.SEARCH) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
-                else if (control.millis() - this.enteredAt > SEARCH_TIMEOUT_MS) this.transition(RobotState.DEFEND)
+                else if (this.hardware.millis() - this.enteredAt > Config.SEARCH_TIMEOUT_MS) this.transition(RobotState.DEFEND)
             } else if (this.state == RobotState.APPROACH) {
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
                 else if (sensors.ballClose(snapshot)) this.transition(RobotState.ATTACK)
             } else if (this.state == RobotState.ATTACK) {
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
             } else if (this.state == RobotState.RECOVER) {
-                if (control.millis() - this.enteredAt > RECOVERY_REVERSE_MS + RECOVERY_TURN_MS) this.transition(RobotState.SEARCH)
+                if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) this.transition(RobotState.SEARCH)
             }
 
             if (this.state == RobotState.STOP || this.state == RobotState.ERROR) movement.stop()

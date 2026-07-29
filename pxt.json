@@ -9,7 +9,7 @@
   "files": [
     "main.ts",
     "config.ts",
-    "motors.ts",
+    "hardware.ts",
     "sensors.ts",
     "movement.ts",
     "strategy.ts",
