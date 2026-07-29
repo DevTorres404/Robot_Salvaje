@@ -26,7 +26,7 @@ namespace RobotSoccer {
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
-            if (snapshot.touchPressed || snapshot.obstacleDetected) {
+            if (snapshot.touchPressed) {
                 this.transition(RobotState.RECOVER)
             }
             if (this.state == RobotState.INIT) this.transition(RobotState.SEARCH)

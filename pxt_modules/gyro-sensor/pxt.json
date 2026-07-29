@@ -1,0 +1,19 @@
+{
+    "name": "gyro-sensor",
+    "description": "Gyro Sensor support",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "gyro.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "targetVersions": {
+        "target": "1.4.41",
+        "pxt": "9.3.19"
+    }
+}

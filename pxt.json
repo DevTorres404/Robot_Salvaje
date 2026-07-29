@@ -5,7 +5,9 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "infrared-sensor": "*"
+        "infrared-sensor": "*",
+        "touch-sensor": "*",
+        "gyro-sensor": "*"
     },
     "files": [
         "main.ts",

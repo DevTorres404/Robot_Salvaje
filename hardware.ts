@@ -5,6 +5,8 @@ namespace RobotSoccer {
         runAuxiliary(speed: number): void
         stopAll(): void
         infraredProximity(): number
+        gyroAngle(): number
+        touchPressed(): boolean
         millis(): number
     }
 
@@ -32,6 +34,14 @@ namespace RobotSoccer {
 
         infraredProximity() {
             return Config.INFRARED_SENSOR.proximity()
+        }
+
+        gyroAngle() {
+            return Config.GYRO_SENSOR.angle()
+        }
+
+        touchPressed() {
+            return Config.TOUCH_SENSOR.isPressed()
         }
 
         millis() {

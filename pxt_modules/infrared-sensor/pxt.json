@@ -1,0 +1,19 @@
+{
+    "name": "infrared-sensor",
+    "description": "Infrared Sensor support",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "ir.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "targetVersions": {
+        "target": "1.4.41",
+        "pxt": "9.3.19"
+    }
+}

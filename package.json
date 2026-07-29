@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "pxt-ev3": "^1.4.41"
+  }
+}

@@ -1,8 +1,7 @@
 namespace RobotSoccer {
     export interface SensorSnapshot {
         infraredProximity: number
-        colorDetected: boolean
-        obstacleDetected: boolean
+        gyroAngle: number
         touchPressed: boolean
     }
 
@@ -12,9 +11,8 @@ namespace RobotSoccer {
         read(): SensorSnapshot {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
-                colorDetected: false,
-                obstacleDetected: false,
-                touchPressed: false
+                gyroAngle: this.hardware.gyroAngle(),
+                touchPressed: this.hardware.touchPressed()
             }
         }
 
