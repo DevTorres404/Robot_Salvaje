@@ -8,13 +8,13 @@ namespace RobotSoccer {
                 return
             }
             if (snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX) {
-                movement.driveTowardHeading(snapshot.infraredHeading)
+                movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
                 if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 100) {
                     movement.kick()
                     this.lastKick = control.millis()
                 }
             } else {
-                movement.driveTowardHeading(snapshot.infraredHeading)
+                movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
             }
         }
     }
