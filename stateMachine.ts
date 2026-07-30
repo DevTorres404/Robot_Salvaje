@@ -37,7 +37,8 @@ namespace RobotSoccer {
             if (sensors.outOfBounds(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
-                && this.state != RobotState.RECOVER) {
+                && this.state != RobotState.RECOVER
+                && this.state != RobotState.RUSH) {
                 // DEFEND retrocede; para deshacer ese cruce debe avanzar.
                 this.recoveryForward = this.state == RobotState.DEFEND
                 this.transition(RobotState.RECOVER)
