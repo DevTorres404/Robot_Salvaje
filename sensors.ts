@@ -3,7 +3,7 @@ namespace RobotSoccer {
         infraredProximity: number
         infraredHeading: number
         gyroAngle: number
-        detectedColor: number
+        detectedColor: ColorSensorColor
         touchPressed: boolean
     }
 
