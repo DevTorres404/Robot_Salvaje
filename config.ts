@@ -25,6 +25,9 @@ namespace RobotSoccer {
         export const SEARCH_TURN_MS = 350
         export const RECOVERY_REVERSE_MS = 450
         export const RECOVERY_TURN_MS = 300
+        // El IR sensor está en X=21.95, el centro del robot en X=123.8.
+        // El offset ~8 compensa esa diferencia a ~300mm de distancia.
+        export const IR_HEADING_OFFSET = 8
         export const IR_BALL_SEEN_MAX = 65
         export const IR_ATTACK_DISTANCE_MAX = 25
         export const LOOP_INTERVAL_MS = 100
