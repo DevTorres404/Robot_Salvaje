@@ -18,6 +18,7 @@
         "attack.ts",
         "defense.ts",
         "search.ts",
+        "rush.ts",
         "recovery.ts",
         "stateMachine.ts",
         "assets.json"
