@@ -13,6 +13,7 @@ namespace RobotSoccer {
     export class StateMachine {
         private state = RobotState.INIT
         private enteredAt: number
+        private touchPrev = false
 
         constructor(private hardware: RobotHardware) {
             this.enteredAt = hardware.millis()
@@ -26,10 +27,17 @@ namespace RobotSoccer {
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
-            // Touch sensor check disabled for debugging - re-enable after confirming movement
-            // if (snapshot.touchPressed && this.state != RobotState.STOP && this.state != RobotState.ERROR) {
-            //     this.transition(RobotState.RECOVER)
-            // }
+            // Touch en SEARCH/APPROACH/DEFEND = obstáculo, recuperar
+            // Touch en ATTACK = gol (se maneja en AttackStrategy)
+            if (snapshot.touchPressed && !this.touchPrev
+                && this.state != RobotState.ATTACK
+                && this.state != RobotState.STOP
+                && this.state != RobotState.ERROR
+                && this.state != RobotState.RECOVER) {
+                this.transition(RobotState.RECOVER)
+            }
+            this.touchPrev = snapshot.touchPressed
+
             if (this.state == RobotState.INIT) this.transition(RobotState.SEARCH)
             else if (this.state == RobotState.SEARCH) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
@@ -38,6 +46,7 @@ namespace RobotSoccer {
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
                 else if (sensors.ballClose(snapshot)) this.transition(RobotState.ATTACK)
             } else if (this.state == RobotState.ATTACK) {
+                // En ATTACK, touch no saca de aquí (lo maneja AttackStrategy para patear)
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
             } else if (this.state == RobotState.RECOVER) {
                 if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) this.transition(RobotState.SEARCH)
