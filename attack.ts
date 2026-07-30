@@ -18,7 +18,7 @@ namespace RobotSoccer {
             if (snapshot.detectedColor === Config.BALL_COLOR) {
                 movement.forward()
             } else {
-                movement.drive(Config.BALL_VERIFY_SPEED, Config.BALL_VERIFY_SPEED)
+                movement.stop()
             }
         }
 
