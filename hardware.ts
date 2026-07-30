@@ -44,28 +44,14 @@ namespace RobotSoccer {
             this.lastIrVal = 0;
         }
 
-        private updateIrSeek() {
-            // Actualizamos la lectura del modo Seek solo si pasaron varios ms, o simplemente la leemos.
-            // Para mantenerlo simple, leemos el valor de 16 bits (Heading + Distance).
-            this.lastIrVal = (Config.INFRARED_SENSOR as any).getDirectionAndDistance()
-        }
-
         infraredProximity() {
-            this.updateIrSeek()
-            // El byte alto (shift 8) contiene la distancia al IR Beacon (0 a 100)
-            let distance = (this.lastIrVal >> 8) & 0xFF
-            // En modo Seek, si no hay pelota suele dar -128 (en complemento a 2 es 128 o 255), 
-            // asumimos que si es mayor a 100, es que no la ve, devolvemos 100 (lejos)
-            if (distance > 100) return 100
-            return distance
+            return Config.INFRARED_SENSOR.proximity()
         }
 
+        // El sensor IR en pxt-ev3 no expone heading en modo Seek de forma pública.
+        // La búsqueda se hace por rotación y la proximidad decide el ataque.
         infraredHeading() {
-            // Ya leímos el valor en infraredProximity, así que no hace falta llamar a updateIrSeek de nuevo,
-            // pero por las dudas usamos el último valor guardado.
-            let heading = this.lastIrVal & 0xFF
-            if (heading > 127) heading -= 256
-            return heading * 3
+            return 0
         }
 
         gyroAngle() {
