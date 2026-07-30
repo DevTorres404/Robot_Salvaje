@@ -19,7 +19,7 @@ namespace RobotSoccer {
         export const WHEEL_CIRCUMFERENCE_MM = Math.PI * WHEEL_DIAMETER_MM
         export const DRIVE_TRACK_WIDTH_MM = 120
 
-        export const DRIVE_SPEED = 100
+        export const DRIVE_SPEED = 50
         export const TURN_SPEED = 60
         export const AUXILIARY_SPEED = 100
         export const SEARCH_TURN_MS = 350
@@ -28,7 +28,7 @@ namespace RobotSoccer {
         // El IR sensor está en X=21.95, el centro del robot en X=123.8.
         // El offset ~8 compensa esa diferencia a ~300mm de distancia.
         export const IR_HEADING_OFFSET = 8
-        export const IR_BALL_SEEN_MAX = 30
+        export const IR_BALL_SEEN_MAX = 45
         export const IR_ATTACK_DISTANCE_MAX = 15
         export const LOOP_INTERVAL_MS = 100
         export const KICK_DURATION_MS = 300
