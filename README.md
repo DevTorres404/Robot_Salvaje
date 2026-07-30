@@ -16,8 +16,13 @@ Las estrategias, la máquina de estados, el movimiento y los sensores dependen d
 | Motor derecho | Puerto C, motor grande |
 | Motor auxiliar | Puerto A, motor mediano |
 | Sensor infrarrojo | Puerto 1 |
+| Sensor giroscópico| Puerto 2 |
+| Sensor táctil | Puerto 3 |
+| Sensor de color | Puerto 4 |
 
-Los enlaces concretos se definen como `Config.LEFT_MOTOR`, `Config.RIGHT_MOTOR`, `Config.AUXILIARY_MOTOR` y `Config.INFRARED_SENSOR` en `config.ts`.
+Para ver la guía fácil de conexiones, leé **[CONEXIONES.md](CONEXIONES.md)**.
+
+Los enlaces concretos se definen en las constantes (ej. `Config.LEFT_MOTOR`, `Config.INFRARED_SENSOR`) dentro de `config.ts`.
 
 ## Parámetros físicos y de navegación
 
