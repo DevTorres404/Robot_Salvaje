@@ -2,6 +2,7 @@ namespace RobotSoccer {
     export interface SensorSnapshot {
         infraredProximity: number
         detectedColor: ColorSensorColor
+        groundColor: ColorSensorColor
     }
 
     export class Sensors {
@@ -10,7 +11,8 @@ namespace RobotSoccer {
         read(): SensorSnapshot {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
-                detectedColor: this.hardware.colorDetected()
+                detectedColor: this.hardware.colorDetected(),
+                groundColor: this.hardware.groundColorDetected()
             }
         }
 
@@ -36,6 +38,10 @@ namespace RobotSoccer {
         obstacleClose(snapshot: SensorSnapshot) {
             return snapshot.infraredProximity <= 5
                 && snapshot.detectedColor !== Config.BALL_COLOR
+        }
+
+        outOfBounds(snapshot: SensorSnapshot) {
+            return snapshot.groundColor === Config.OUT_OF_BOUNDS_COLOR
         }
     }
 }

@@ -47,6 +47,12 @@ namespace RobotSoccer {
             this.hardware.stopDrive()
         }
 
+        forwardTime(ms: number) {
+            this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED)
+            pause(ms)
+            this.hardware.stopDrive()
+        }
+
         headingDegrees() {
             let leftDegrees = this.hardware.leftWheelAngle() - this.initialLeftAngle
             let rightDegrees = this.hardware.rightWheelAngle() - this.initialRightAngle

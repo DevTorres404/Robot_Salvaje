@@ -5,8 +5,10 @@ namespace RobotSoccer {
         export const RIGHT_MOTOR = motors.largeC
         export const AUXILIARY_MOTOR = motors.mediumA
         export const INFRARED_SENSOR = sensors.infrared1
-        export const COLOR_SENSOR = sensors.color4
+        export const COLOR_SENSOR = sensors.color2
+        export const GROUND_COLOR_SENSOR = sensors.color3
         export const BALL_COLOR = ColorSensorColor.White
+        export const OUT_OF_BOUNDS_COLOR = ColorSensorColor.White
         // Los signos adaptan la orientación mecánica de cada actuador.
         export const LEFT_MOTOR_DIRECTION = -1
         export const RIGHT_MOTOR_DIRECTION = -1

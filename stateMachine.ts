@@ -14,6 +14,7 @@ namespace RobotSoccer {
         private state = RobotState.INIT
         private enteredAt: number
         private lastBallSeenAt: number
+        private recoveryForward = false
 
 
         constructor(private hardware: RobotHardware) {
@@ -22,6 +23,7 @@ namespace RobotSoccer {
         }
 
         current() { return this.state }
+        recoveryMovesForward() { return this.recoveryForward }
 
         transition(next: RobotState) {
             this.state = next
@@ -31,12 +33,22 @@ namespace RobotSoccer {
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
             if (sensors.ballSeen(snapshot)) this.lastBallSeenAt = this.hardware.millis()
 
+            if (sensors.outOfBounds(snapshot)
+                && this.state != RobotState.STOP
+                && this.state != RobotState.ERROR
+                && this.state != RobotState.RECOVER) {
+                // DEFEND retrocede; para deshacer ese cruce debe avanzar.
+                this.recoveryForward = this.state == RobotState.DEFEND
+                this.transition(RobotState.RECOVER)
+            }
+
             // Los sensores son frontales: proximidad extrema sin blanco indica un obstáculo.
             if (sensors.obstacleClose(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
                 && this.state != RobotState.ATTACK
                 && this.state != RobotState.RECOVER) {
+                this.recoveryForward = false
                 this.transition(RobotState.RECOVER)
             }
 
@@ -50,6 +62,7 @@ namespace RobotSoccer {
                 }
                 else if (!sensors.ballConfirmed(snapshot)
                     && this.hardware.millis() - this.enteredAt > Config.BALL_VERIFY_MS) {
+                    this.recoveryForward = false
                     this.transition(RobotState.RECOVER)
                 }
             } else if (this.state == RobotState.ATTACK) {

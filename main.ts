@@ -24,11 +24,12 @@ forever(function () {
     let current = stateMachine.current()
     if (control.millis() % 1000 < 100) {
         console.log("St:" + current + " IR:" + snapshot.infraredProximity
-            + " C:" + snapshot.detectedColor + " H:" + Math.round(movement.headingDegrees()))
+            + " C:" + snapshot.detectedColor + " G:" + snapshot.groundColor
+            + " H:" + Math.round(movement.headingDegrees()))
     }
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
-        recoveryStrategy.reset()
+        recoveryStrategy.reset(stateMachine.recoveryMovesForward())
     }
     if (current == RobotSoccer.RobotState.ATTACK && previousState != RobotSoccer.RobotState.ATTACK) {
         attackStrategy.reset()

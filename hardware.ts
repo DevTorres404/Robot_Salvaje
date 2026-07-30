@@ -8,6 +8,7 @@ namespace RobotSoccer {
         stopAll(): void
         infraredProximity(): number
         colorDetected(): ColorSensorColor
+        groundColorDetected(): ColorSensorColor
         leftWheelAngle(): number
         rightWheelAngle(): number
         millis(): number
@@ -50,6 +51,10 @@ namespace RobotSoccer {
 
         colorDetected() {
             return Config.COLOR_SENSOR.color()
+        }
+
+        groundColorDetected() {
+            return Config.GROUND_COLOR_SENSOR.color()
         }
 
         leftWheelAngle() {

@@ -16,8 +16,8 @@ Basado en la configuración actual de tu archivo `config.ts`, esta es la forma e
 *   **Puerto C:** Motor Grande (Rueda Derecha)
 ### 📡 Sensores (Puertos con Números)
 *   **Puerto 1:** Sensor Infrarrojo (Buscador de pelota)
-*   **Puerto 2:** Sensor Giroscópico (Navegación)
-*   **Puerto 3:** Sensor Táctil (Choques)
+*   **Puerto 2:** Sensor Color
+*   **Puerto 3:** Sensor Color
 
 ---
 
