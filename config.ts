@@ -7,7 +7,6 @@ namespace RobotSoccer {
         export const INFRARED_SENSOR = sensors.infrared1
         export const GYRO_SENSOR = sensors.gyro2
         export const TOUCH_SENSOR = sensors.touch3
-        export const COLOR_SENSOR = sensors.color4
 
         // Los signos adaptan la orientación mecánica de cada actuador.
         export const LEFT_MOTOR_DIRECTION = -1
@@ -33,8 +32,4 @@ namespace RobotSoccer {
         export const LOOP_INTERVAL_MS = 100
         export const KICK_DURATION_MS = 300
         export const SEARCH_TIMEOUT_MS = 15000
-
-        // MakeCode EV3 Colores: 2 = Azul, 4 = Amarillo, 5 = Rojo, etc.
-        export const GOAL_COLOR = 2
-    }
-}
+    }}

@@ -12,9 +12,8 @@ namespace RobotSoccer {
                 return
             }
 
-            // Si el sensor de color ve algo que no es ni verde (3) ni "nada" (0), asumimos que atrapó la pelota.
-            // (La pelota blanca en VRT suele leerse como blanco (6) o a veces gris).
-            const hasBall = snapshot.colorDetected > 0 && snapshot.colorDetected != 3;
+            // Asumimos que atrapó la pelota si la proximidad de la baliza IR es muy corta
+            const hasBall = snapshot.infraredProximity < 20;
 
             if (hasBall) {
                 // (a) Use compass sensor to point at the net
