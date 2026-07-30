@@ -44,5 +44,21 @@ namespace RobotSoccer {
             const steer = Math.round(centered * 0.8)
             this.hardware.drive(base - steer, base + steer)
         }
+
+        alignToGyro(target: number) {
+            const current = this.hardware.gyroAngle()
+            const error = target - current
+            
+            // Si ya estamos casi alineados (margen de 5 grados), avanzamos
+            if (Math.abs(error) < 5) {
+                this.forward()
+                return true
+            }
+
+            // Giramos proporcionalmente hacia el ángulo deseado
+            const steer = error > 0 ? Config.TURN_SPEED : -Config.TURN_SPEED
+            this.hardware.drive(steer, -steer)
+            return false
+        }
     }
 }
