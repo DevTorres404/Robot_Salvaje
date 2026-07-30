@@ -22,11 +22,9 @@ forever(function () {
     stateMachine.update(snapshot, sensorsRuntime, movement)
 
     let current = stateMachine.current()
-
-    console.log("State: " + current)
-    console.log("IR H: " + snapshot.infraredHeading)
-    console.log("IR P: " + snapshot.infraredProximity)
-    console.log("Touch: " + snapshot.touchPressed)
+    if (control.millis() % 1000 < 100) {
+        console.log("St:" + current + " IR:" + snapshot.infraredProximity + " Gy:" + snapshot.gyroAngle)
+    }
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.reset()
