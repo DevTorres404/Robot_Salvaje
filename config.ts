@@ -28,6 +28,7 @@ namespace RobotSoccer {
         export const IR_BALL_SEEN_MAX = 65
         export const IR_ATTACK_DISTANCE_MAX = 25
         export const LOOP_INTERVAL_MS = 100
+        export const KICK_DURATION_MS = 300
         export const SEARCH_TIMEOUT_MS = 15000
     }
 }

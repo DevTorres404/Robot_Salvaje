@@ -7,7 +7,11 @@ namespace RobotSoccer {
         turnLeft() { this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED) }
         turnRight() { this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED) }
         stop() { this.hardware.stopDrive() }
-        kick() { this.hardware.runAuxiliary(Config.AUXILIARY_SPEED) }
+        kick() {
+            this.hardware.runAuxiliary(Config.AUXILIARY_SPEED)
+            pause(Config.KICK_DURATION_MS)
+            this.hardware.stopAuxiliary()
+        }
 
         turnLeftDegrees(degrees: number) {
             const start = this.hardware.gyroAngle()

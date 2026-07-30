@@ -28,6 +28,10 @@ namespace RobotSoccer {
             Config.AUXILIARY_MOTOR.run(speed * Config.AUXILIARY_MOTOR_DIRECTION)
         }
 
+        stopAuxiliary() {
+            Config.AUXILIARY_MOTOR.stop()
+        }
+
         stopAll() {
             Config.LEFT_MOTOR.stop()
             Config.RIGHT_MOTOR.stop()
