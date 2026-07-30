@@ -28,8 +28,6 @@ forever(function () {
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.reset()
-    } else if (current == RobotSoccer.RobotState.SEARCH && previousState != RobotSoccer.RobotState.SEARCH) {
-        searchStrategy.reset()
     }
     previousState = current
 

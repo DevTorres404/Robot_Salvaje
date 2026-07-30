@@ -7,17 +7,18 @@ namespace RobotSoccer {
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
-            // Touch = estamos contra el arco, pateamos
-            if (snapshot.touchPressed) {
-                if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 100) {
+            // Ball is right in front — KICK
+            if (snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX) {
+                if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 200) {
+                    movement.stop()
                     movement.kick()
                     this.lastKick = control.millis()
                 }
                 return
             }
 
-            // Alinear al arco y empujar la pelota
-            movement.alignToGyro(0)
+            // Drive toward the ball using the IR heading
+            movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
         }
     }
 }
