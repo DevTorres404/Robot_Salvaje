@@ -44,21 +44,12 @@ namespace RobotSoccer {
             this.lastIrVal = 0;
         }
 
-        private updateIrSeek() {
-            this.lastIrVal = (Config.INFRARED_SENSOR as any).getDirectionAndDistance()
-        }
-
         infraredProximity() {
-            this.updateIrSeek()
-            let distance = (this.lastIrVal >> 8) & 0xFF
-            if (distance > 100) return 100
-            return distance
+            return Config.INFRARED_SENSOR.proximity()
         }
 
         infraredHeading() {
-            let heading = this.lastIrVal & 0xFF
-            if (heading > 127) heading -= 256
-            return heading * 3
+            return 0
         }
 
         gyroAngle() {

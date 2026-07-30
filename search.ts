@@ -3,17 +3,11 @@ namespace RobotSoccer {
         constructor() {}
 
         run(snapshot: SensorSnapshot, movement: Movement) {
-            // Seek mode: heading != 0 means we can see the ball directly — drive toward it
-            if (snapshot.infraredHeading != 0) {
-                movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
-                return
-            }
-
-            // No ball in sight — rotate to scan the field
+            // Spin to scan the field. We rely on Proximity hitting a threshold (handled in stateMachine)
             let cycle = control.millis() % 4000
-            if (cycle < 1500) {
+            if (cycle < 1000) {
                 movement.turnLeft()
-            } else if (cycle < 2500) {
+            } else if (cycle < 1500) {
                 movement.forward()
             } else {
                 movement.turnRight()

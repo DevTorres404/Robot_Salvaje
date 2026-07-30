@@ -17,8 +17,8 @@ namespace RobotSoccer {
                 return
             }
 
-            // Drive toward the ball using the IR heading
-            movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
+            // Drive straight toward the ball (we rely on proximity to know we're close)
+            movement.forward()
         }
     }
 }

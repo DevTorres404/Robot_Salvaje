@@ -28,7 +28,7 @@ namespace RobotSoccer {
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
             // Touch en SEARCH/APPROACH/DEFEND = obstáculo, recuperar
-            // Touch en ATTACK = gol (se maneja en AttackStrategy)
+            // Touch sensor check re-enabled: if we hit a wall, back up!
             if (snapshot.touchPressed && !this.touchPrev
                 && this.state != RobotState.ATTACK
                 && this.state != RobotState.STOP
