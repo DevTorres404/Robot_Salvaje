@@ -24,7 +24,9 @@ namespace RobotSoccer {
         export const ATTACK_DRIVE_SPEED = 100
         export const TURN_SPEED = 75
         export const AUXILIARY_SPEED = 100
-        export const SEARCH_SWEEP_DEGREES = 85
+        export const SEARCH_NEAR_SWEEP_DEGREES = 30
+        export const SEARCH_MID_SWEEP_DEGREES = 70
+        export const SEARCH_WIDE_SWEEP_DEGREES = 120
         export const SEARCH_TURN_SPEED = 50
         export const SEARCH_ALIGN_TOLERANCE_DEGREES = 6
         export const BALL_ALIGN_SWEEP_DEGREES = 12
@@ -33,7 +35,7 @@ namespace RobotSoccer {
         export const RECOVERY_TURN_MS = 240
         export const IR_BALL_SEEN_MAX = 45
         export const IR_ATTACK_DISTANCE_MAX = 15
-        export const LOOP_INTERVAL_MS = 100
+        export const LOOP_INTERVAL_MS = 40
         export const KICK_DURATION_MS = 300
         // El rumbo 0 se registra al iniciar: el robot debe comenzar mirando al arco rival.
         export const GOAL_HEADING_DEGREES = 0
