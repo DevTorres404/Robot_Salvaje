@@ -1,6 +1,8 @@
 namespace RobotSoccer {
     export class AttackStrategy implements Strategy {
+        private phase: number
         private driveStartedAt: number
+        private shotStartedAt: number
         private done: boolean
 
         constructor() {
@@ -8,7 +10,9 @@ namespace RobotSoccer {
         }
 
         reset() {
+            this.phase = 0
             this.driveStartedAt = 0
+            this.shotStartedAt = 0
             this.done = false
         }
 
@@ -30,8 +34,19 @@ namespace RobotSoccer {
                 this.driveStartedAt = control.millis()
             }
 
-            movement.driveTowardFieldHeading(Config.GOAL_HEADING_DEGREES)
-            if (control.millis() - this.driveStartedAt >= Config.GOAL_CARRY_MS) {
+            if (this.phase == 0) {
+                let aligned = movement.driveTowardFieldHeading(Config.GOAL_HEADING_DEGREES)
+                let carryTime = control.millis() - this.driveStartedAt
+                if (carryTime >= Config.GOAL_CARRY_MS
+                    && (aligned || carryTime >= Config.GOAL_CARRY_MAX_MS)) {
+                    this.phase = 1
+                    this.shotStartedAt = control.millis()
+                }
+                return
+            }
+
+            movement.attackForward()
+            if (control.millis() - this.shotStartedAt >= Config.SHOT_STRAIGHT_MS) {
                 movement.stop()
                 movement.kick()
                 this.done = true

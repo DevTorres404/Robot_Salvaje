@@ -33,10 +33,12 @@ namespace RobotSoccer {
         export const KICK_DURATION_MS = 300
         // El rumbo 0 se registra al iniciar: el robot debe comenzar mirando al arco rival.
         export const GOAL_HEADING_DEGREES = 0
-        export const GOAL_ALIGN_TOLERANCE_DEGREES = 20
+        export const GOAL_ALIGN_TOLERANCE_DEGREES = 12
         export const GOAL_ALIGN_SPEED = 20
-        export const GOAL_CARRY_MS = 1600
-        export const ATTACK_TIMEOUT_MS = 3000
+        export const GOAL_CARRY_MS = 1300
+        export const GOAL_CARRY_MAX_MS = 2200
+        export const SHOT_STRAIGHT_MS = 250
+        export const ATTACK_TIMEOUT_MS = 3200
         export const SEARCH_TIMEOUT_MS = 15000
         export const DEFEND_DURATION_MS = 2500
     }}
