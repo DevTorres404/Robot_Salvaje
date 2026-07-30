@@ -26,9 +26,10 @@ namespace RobotSoccer {
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
-            if (snapshot.touchPressed && this.state != RobotState.STOP && this.state != RobotState.ERROR) {
-                this.transition(RobotState.RECOVER)
-            }
+            // Touch sensor check disabled for debugging - re-enable after confirming movement
+            // if (snapshot.touchPressed && this.state != RobotState.STOP && this.state != RobotState.ERROR) {
+            //     this.transition(RobotState.RECOVER)
+            // }
             if (this.state == RobotState.INIT) this.transition(RobotState.SEARCH)
             else if (this.state == RobotState.SEARCH) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
