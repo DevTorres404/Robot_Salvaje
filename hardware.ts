@@ -3,6 +3,7 @@ namespace RobotSoccer {
         drive(leftSpeed: number, rightSpeed: number): void
         stopDrive(): void
         runAuxiliary(speed: number): void
+        stopAuxiliary(): void
         stopAll(): void
         infraredProximity(): number
         gyroAngle(): number
