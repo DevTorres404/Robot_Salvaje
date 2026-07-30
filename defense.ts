@@ -1,10 +1,12 @@
 namespace RobotSoccer {
     export class DefenseStrategy implements Strategy {
         run(snapshot: SensorSnapshot, movement: Movement) {
-            if (snapshot.infraredHeading != 0) {
-                movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
+            if (snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX) {
+                movement.forward()
             } else {
-                movement.turnLeft()
+                let cycle = control.millis() % 2400
+                if (cycle < 1200) movement.turnLeft()
+                else movement.turnRight()
             }
         }
     }

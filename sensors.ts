@@ -1,7 +1,6 @@
 namespace RobotSoccer {
     export interface SensorSnapshot {
         infraredProximity: number
-        infraredHeading: number
         detectedColor: ColorSensorColor
     }
 
@@ -11,25 +10,24 @@ namespace RobotSoccer {
         read(): SensorSnapshot {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
-                infraredHeading: this.hardware.infraredHeading(),
                 detectedColor: this.hardware.colorDetected()
             }
         }
 
         ballSeen(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
+            return snapshot.detectedColor === Config.BALL_COLOR
+                || (snapshot.infraredProximity >= 0
+                    && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX)
         }
 
         ballClose(snapshot: SensorSnapshot) {
             return snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
+                && snapshot.detectedColor === Config.BALL_COLOR
         }
 
-        isOnPlayableField(snapshot: SensorSnapshot) {
-            return snapshot.detectedColor === Config.FIELD_COLOR
-        }
-
-        goalSeen(snapshot: SensorSnapshot) {
-            return snapshot.detectedColor === Config.GOAL_COLOR
+        obstacleClose(snapshot: SensorSnapshot) {
+            return snapshot.infraredProximity <= 5
+                && snapshot.detectedColor !== Config.BALL_COLOR
         }
     }
 }

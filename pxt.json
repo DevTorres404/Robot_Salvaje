@@ -1,13 +1,11 @@
 {
-    "name": "robot-soccer-ev3-makecode",
+    "name": "robot-salvajisimo-final",
     "version": "0.1.0",
     "description": "Runtime EV3 simplificado derivado de soccer-robot.",
     "license": "MIT",
     "dependencies": {
         "core": "*",
         "infrared-sensor": "*",
-        "touch-sensor": "*",
-        "gyro-sensor": "*",
         "color-sensor": "*"
     },
     "files": [

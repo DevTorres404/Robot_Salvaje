@@ -6,7 +6,6 @@ namespace RobotSoccer {
         stopAuxiliary(): void
         stopAll(): void
         infraredProximity(): number
-        infraredHeading(): number
         colorDetected(): ColorSensorColor
         millis(): number
     }
@@ -37,18 +36,8 @@ namespace RobotSoccer {
             Config.AUXILIARY_MOTOR.stop()
         }
 
-        private lastIrVal: number;
-
-        constructor() {
-            this.lastIrVal = 0;
-        }
-
         infraredProximity() {
             return Config.INFRARED_SENSOR.proximity()
-        }
-
-        infraredHeading() {
-            return 0
         }
 
         colorDetected() {

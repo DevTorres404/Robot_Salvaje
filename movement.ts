@@ -32,12 +32,5 @@ namespace RobotSoccer {
             this.hardware.stopDrive()
         }
 
-        driveTowardHeading(heading: number, proximity: number) {
-            const base = Config.DRIVE_SPEED
-            const offset = proximity > 25 ? 15 : proximity > 10 ? 8 : 4
-            const centered = heading - offset
-            const steer = Math.round(centered * 0.8)
-            this.hardware.drive(base - steer, base + steer)
-        }
     }
 }

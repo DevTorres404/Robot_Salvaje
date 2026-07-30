@@ -27,8 +27,8 @@ namespace RobotSoccer {
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
-            // Color boundary check: if we leave the field, back up!
-            if (!sensors.isOnPlayableField(snapshot)
+            // Los sensores son frontales: proximidad extrema sin blanco indica un obstáculo.
+            if (sensors.obstacleClose(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
                 && this.state != RobotState.RECOVER) {
@@ -43,8 +43,10 @@ namespace RobotSoccer {
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
                 else if (sensors.ballClose(snapshot)) this.transition(RobotState.ATTACK)
             } else if (this.state == RobotState.ATTACK) {
-
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
+                else if (this.hardware.millis() - this.enteredAt > Config.ATTACK_RESET_MS) {
+                    this.transition(RobotState.SEARCH)
+                }
             } else if (this.state == RobotState.RECOVER) {
                 if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) {
                     this.transition(RobotState.SEARCH)

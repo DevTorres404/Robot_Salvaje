@@ -23,7 +23,7 @@ forever(function () {
 
     let current = stateMachine.current()
     if (control.millis() % 1000 < 100) {
-        console.log("St:" + current + " IR:" + snapshot.infraredProximity + " Gy:" + snapshot.gyroAngle)
+        console.log("St:" + current + " IR:" + snapshot.infraredProximity + " C:" + snapshot.detectedColor)
     }
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
