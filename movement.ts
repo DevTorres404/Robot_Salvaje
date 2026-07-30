@@ -11,15 +11,19 @@ namespace RobotSoccer {
 
         turnLeftDegrees(degrees: number) {
             const start = this.hardware.gyroAngle()
+            const target = start - degrees
+            if (this.hardware.gyroAngle() <= target) return
             this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED)
-            pauseUntil(() => this.hardware.gyroAngle() <= start - degrees)
+            pauseUntil(() => this.hardware.gyroAngle() <= target)
             this.hardware.stopDrive()
         }
 
         turnRightDegrees(degrees: number) {
             const start = this.hardware.gyroAngle()
+            const target = start + degrees
+            if (this.hardware.gyroAngle() >= target) return
             this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED)
-            pauseUntil(() => this.hardware.gyroAngle() >= start + degrees)
+            pauseUntil(() => this.hardware.gyroAngle() >= target)
             this.hardware.stopDrive()
         }
 

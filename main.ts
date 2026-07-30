@@ -6,6 +6,7 @@ let searchStrategy = new RobotSoccer.SearchStrategy()
 let attackStrategy = new RobotSoccer.AttackStrategy()
 let defenseStrategy = new RobotSoccer.DefenseStrategy()
 let recoveryStrategy = new RobotSoccer.RecoveryStrategy()
+let previousState = RobotSoccer.RobotState.INIT
 
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
     stateMachine.transition(RobotSoccer.RobotState.STOP)
@@ -20,13 +21,20 @@ forever(function () {
     let snapshot = sensorsRuntime.read()
     stateMachine.update(snapshot, sensorsRuntime, movement)
 
-    if (stateMachine.current() == RobotSoccer.RobotState.SEARCH) {
+    let current = stateMachine.current()
+
+    if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
+        recoveryStrategy.reset()
+    }
+    previousState = current
+
+    if (current == RobotSoccer.RobotState.SEARCH) {
         searchStrategy.run(snapshot, movement)
-    } else if (stateMachine.current() == RobotSoccer.RobotState.APPROACH || stateMachine.current() == RobotSoccer.RobotState.ATTACK) {
+    } else if (current == RobotSoccer.RobotState.APPROACH || current == RobotSoccer.RobotState.ATTACK) {
         attackStrategy.run(snapshot, movement)
-    } else if (stateMachine.current() == RobotSoccer.RobotState.DEFEND) {
+    } else if (current == RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.run(snapshot, movement)
-    } else if (stateMachine.current() == RobotSoccer.RobotState.RECOVER) {
+    } else if (current == RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.run(snapshot, movement)
     }
     pause(RobotSoccer.Config.LOOP_INTERVAL_MS)
