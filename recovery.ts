@@ -10,7 +10,7 @@ namespace RobotSoccer {
             if (this.done) return
             this.done = true
             movement.reverseTime(Config.RECOVERY_REVERSE_MS)
-            movement.turnLeftDegrees(90)
+            movement.turnLeftTime(Config.RECOVERY_TURN_MS)
         }
 
         reset() {

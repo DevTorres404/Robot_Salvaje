@@ -46,11 +46,7 @@ namespace RobotSoccer {
 
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
             } else if (this.state == RobotState.RECOVER) {
-                // If we bump into a wall while reversing, stop reversing immediately to avoid stalling
-                if (snapshot.touchPressed) {
-                    this.transition(RobotState.SEARCH)
-                }
-                else if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) {
+                if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) {
                     this.transition(RobotState.SEARCH)
                 }
             }

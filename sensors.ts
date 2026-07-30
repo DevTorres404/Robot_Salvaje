@@ -2,9 +2,7 @@ namespace RobotSoccer {
     export interface SensorSnapshot {
         infraredProximity: number
         infraredHeading: number
-        gyroAngle: number
         detectedColor: ColorSensorColor
-        touchPressed: boolean
     }
 
     export class Sensors {
@@ -14,9 +12,7 @@ namespace RobotSoccer {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
                 infraredHeading: this.hardware.infraredHeading(),
-                gyroAngle: this.hardware.gyroAngle(),
-                detectedColor: this.hardware.colorDetected(),
-                touchPressed: this.hardware.touchPressed()
+                detectedColor: this.hardware.colorDetected()
             }
         }
 
@@ -30,6 +26,10 @@ namespace RobotSoccer {
 
         isOnPlayableField(snapshot: SensorSnapshot) {
             return snapshot.detectedColor === Config.FIELD_COLOR
+        }
+
+        goalSeen(snapshot: SensorSnapshot) {
+            return snapshot.detectedColor === Config.GOAL_COLOR
         }
     }
 }

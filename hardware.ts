@@ -7,9 +7,7 @@ namespace RobotSoccer {
         stopAll(): void
         infraredProximity(): number
         infraredHeading(): number
-        gyroAngle(): number
         colorDetected(): ColorSensorColor
-        touchPressed(): boolean
         millis(): number
     }
 
@@ -53,16 +51,8 @@ namespace RobotSoccer {
             return 0
         }
 
-        gyroAngle() {
-            return Config.GYRO_SENSOR.angle()
-        }
-
         colorDetected() {
             return Config.COLOR_SENSOR.color()
-        }
-
-        touchPressed() {
-            return Config.TOUCH_SENSOR.isPressed()
         }
 
         millis() {

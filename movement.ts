@@ -14,50 +14,15 @@ namespace RobotSoccer {
             this.hardware.stopAuxiliary()
         }
 
-        alignToGyro(target: number) {
-            const current = this.hardware.gyroAngle()
-            let diff = target - current
-            
-            while (diff > 180) diff -= 360
-            while (diff < -180) diff += 360
-            
-            if (Math.abs(diff) < 5) {
-                this.forward()
-                return
-            }
-            
-            let speed = Math.abs(diff) * 1.5
-            if (speed < 10) speed = 10
-            if (speed > Config.TURN_SPEED) speed = Config.TURN_SPEED
-            
-            if (diff > 0) {
-                this.hardware.drive(speed, -speed)
-            } else {
-                this.hardware.drive(-speed, speed)
-            }
-        }
-
-        turnLeftDegrees(degrees: number) {
-            const start = this.hardware.gyroAngle()
-            const target = start - degrees
-            if (this.hardware.gyroAngle() <= target) return
+        turnLeftTime(ms: number) {
             this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED)
-            const timeout = this.hardware.millis() + 2000
-            while (this.hardware.gyroAngle() > target && this.hardware.millis() < timeout) {
-                pause(10)
-            }
+            pause(ms)
             this.hardware.stopDrive()
         }
 
-        turnRightDegrees(degrees: number) {
-            const start = this.hardware.gyroAngle()
-            const target = start + degrees
-            if (this.hardware.gyroAngle() >= target) return
+        turnRightTime(ms: number) {
             this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED)
-            const timeout = this.hardware.millis() + 2000
-            while (this.hardware.gyroAngle() < target && this.hardware.millis() < timeout) {
-                pause(10)
-            }
+            pause(ms)
             this.hardware.stopDrive()
         }
 
