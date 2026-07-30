@@ -44,14 +44,21 @@ namespace RobotSoccer {
             this.lastIrVal = 0;
         }
 
-        infraredProximity() {
-            return Config.INFRARED_SENSOR.proximity()
+        private updateIrSeek() {
+            this.lastIrVal = (Config.INFRARED_SENSOR as any).getDirectionAndDistance()
         }
 
-        // El sensor IR en pxt-ev3 no expone heading en modo Seek de forma pública.
-        // La búsqueda se hace por rotación y la proximidad decide el ataque.
+        infraredProximity() {
+            this.updateIrSeek()
+            let distance = (this.lastIrVal >> 8) & 0xFF
+            if (distance > 100) return 100
+            return distance
+        }
+
         infraredHeading() {
-            return 0
+            let heading = this.lastIrVal & 0xFF
+            if (heading > 127) heading -= 256
+            return heading * 3
         }
 
         gyroAngle() {

@@ -28,9 +28,9 @@ namespace RobotSoccer {
                     }
                 }
             } else {
-                // Avanzamos directo: la transici\u00f3n a ATTACK ocurri\u00f3 porque
-                // el robot detect\u00f3 la pelota por proximidad al girar.
-                movement.forward()
+                // (a) Use the IR Seeker sensor to point at the ball
+                // (b) Drive forward
+                movement.driveTowardHeading(snapshot.infraredHeading, 100)
             }
         }
     }
