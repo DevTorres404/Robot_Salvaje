@@ -10,8 +10,8 @@ namespace RobotSoccer {
         export const COLOR_SENSOR = sensors.color4
 
         // Los signos adaptan la orientación mecánica de cada actuador.
-        export const LEFT_MOTOR_DIRECTION = 1
-        export const RIGHT_MOTOR_DIRECTION = 1
+        export const LEFT_MOTOR_DIRECTION = -1
+        export const RIGHT_MOTOR_DIRECTION = -1
         export const AUXILIARY_MOTOR_DIRECTION = 1
 
         export const WHEEL_DIAMETER_MM = 56
