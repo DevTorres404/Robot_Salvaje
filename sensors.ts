@@ -14,10 +14,17 @@ namespace RobotSoccer {
             }
         }
 
-        ballSeen(snapshot: SensorSnapshot) {
+        ballCandidate(snapshot: SensorSnapshot) {
+            return snapshot.infraredProximity >= 0
+                && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
+        }
+
+        ballConfirmed(snapshot: SensorSnapshot) {
             return snapshot.detectedColor === Config.BALL_COLOR
-                || (snapshot.infraredProximity >= 0
-                    && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX)
+        }
+
+        ballSeen(snapshot: SensorSnapshot) {
+            return this.ballConfirmed(snapshot) || this.ballCandidate(snapshot)
         }
 
         ballClose(snapshot: SensorSnapshot) {

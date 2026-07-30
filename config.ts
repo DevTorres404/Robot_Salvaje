@@ -24,6 +24,8 @@ namespace RobotSoccer {
         export const SEARCH_TURN_SPEED = 35
         export const SEARCH_ALIGN_TOLERANCE_DEGREES = 6
         export const SEARCH_ADVANCE_MS = 600
+        export const BALL_VERIFY_SPEED = 20
+        export const BALL_VERIFY_MS = 600
         export const RECOVERY_REVERSE_MS = 450
         export const RECOVERY_TURN_MS = 300
         export const IR_BALL_SEEN_MAX = 45

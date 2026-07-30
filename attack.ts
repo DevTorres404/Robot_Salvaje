@@ -15,7 +15,11 @@ namespace RobotSoccer {
         }
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
-            movement.forward()
+            if (snapshot.detectedColor === Config.BALL_COLOR) {
+                movement.forward()
+            } else {
+                movement.drive(Config.BALL_VERIFY_SPEED, Config.BALL_VERIFY_SPEED)
+            }
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {

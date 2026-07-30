@@ -2,8 +2,10 @@ namespace RobotSoccer {
     export class SearchStrategy implements Strategy {
         private phase: number
         private advanceStartedAt: number
+        private advanceHeading: number
 
         constructor() {
+            this.advanceHeading = Config.SEARCH_SWEEP_DEGREES
             this.reset()
         }
 
@@ -29,7 +31,7 @@ namespace RobotSoccer {
             }
 
             if (this.phase == 3) {
-                if (movement.turnTowardFieldHeading(Config.GOAL_HEADING_DEGREES)) {
+                if (movement.turnTowardFieldHeading(this.advanceHeading)) {
                     this.phase = 4
                     this.advanceStartedAt = control.millis()
                 }
@@ -38,6 +40,7 @@ namespace RobotSoccer {
 
             movement.forward()
             if (control.millis() - this.advanceStartedAt >= Config.SEARCH_ADVANCE_MS) {
+                this.advanceHeading = -this.advanceHeading
                 this.reset()
             }
         }
