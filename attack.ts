@@ -7,8 +7,8 @@ namespace RobotSoccer {
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
-            // Ball is right in front — KICK
-            if (snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX) {
+            // Touch = gol, patear
+            if (snapshot.touchPressed) {
                 if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 200) {
                     movement.stop()
                     movement.kick()
@@ -17,7 +17,7 @@ namespace RobotSoccer {
                 return
             }
 
-            // Drive straight toward the ball (we rely on proximity to know we're close)
+            // Avanzar hacia la pelota
             movement.forward()
         }
     }
