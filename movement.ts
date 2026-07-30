@@ -7,6 +7,7 @@ namespace RobotSoccer {
         turnLeft() { this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED) }
         turnRight() { this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED) }
         stop() { this.hardware.stopDrive() }
+        drive(leftSpeed: number, rightSpeed: number) { this.hardware.drive(leftSpeed, rightSpeed) }
         kick() {
             this.hardware.runAuxiliary(Config.AUXILIARY_SPEED)
             pause(Config.KICK_DURATION_MS)
