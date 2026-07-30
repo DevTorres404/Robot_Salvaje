@@ -13,10 +13,12 @@ namespace RobotSoccer {
     export class StateMachine {
         private state = RobotState.INIT
         private enteredAt: number
+        private lastBallSeenAt: number
 
 
         constructor(private hardware: RobotHardware) {
             this.enteredAt = hardware.millis()
+            this.lastBallSeenAt = this.enteredAt
         }
 
         current() { return this.state }
@@ -27,10 +29,13 @@ namespace RobotSoccer {
         }
 
         update(snapshot: SensorSnapshot, sensors: Sensors, movement: Movement) {
+            if (sensors.ballSeen(snapshot)) this.lastBallSeenAt = this.hardware.millis()
+
             // Los sensores son frontales: proximidad extrema sin blanco indica un obstáculo.
             if (sensors.obstacleClose(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
+                && this.state != RobotState.ATTACK
                 && this.state != RobotState.RECOVER) {
                 this.transition(RobotState.RECOVER)
             }
@@ -49,7 +54,9 @@ namespace RobotSoccer {
                     this.transition(RobotState.RECOVER)
                 }
             } else if (this.state == RobotState.ATTACK) {
-                if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
+                if (this.hardware.millis() - this.lastBallSeenAt > Config.BALL_LOST_GRACE_MS) {
+                    this.transition(RobotState.SEARCH)
+                }
                 else if (this.hardware.millis() - this.enteredAt > Config.ATTACK_TIMEOUT_MS) {
                     this.transition(RobotState.SEARCH)
                 }

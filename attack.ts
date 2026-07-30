@@ -1,6 +1,7 @@
 namespace RobotSoccer {
     export class AttackStrategy implements Strategy {
         private phase: number
+        private secureStartedAt: number
         private driveStartedAt: number
         private shotStartedAt: number
         private done: boolean
@@ -11,6 +12,7 @@ namespace RobotSoccer {
 
         reset() {
             this.phase = 0
+            this.secureStartedAt = 0
             this.driveStartedAt = 0
             this.shotStartedAt = 0
             this.done = false
@@ -18,7 +20,7 @@ namespace RobotSoccer {
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
             if (snapshot.detectedColor === Config.BALL_COLOR) {
-                movement.attackForward()
+                movement.approachBall()
             } else {
                 movement.stop()
             }
@@ -30,16 +32,24 @@ namespace RobotSoccer {
                 return
             }
 
-            if (this.driveStartedAt == 0) {
-                this.driveStartedAt = control.millis()
+            if (this.phase == 0) {
+                if (this.secureStartedAt == 0) {
+                    this.secureStartedAt = control.millis()
+                }
+                movement.secureBall()
+                if (control.millis() - this.secureStartedAt >= Config.BALL_SECURE_MS) {
+                    this.phase = 1
+                    this.driveStartedAt = control.millis()
+                }
+                return
             }
 
-            if (this.phase == 0) {
+            if (this.phase == 1) {
                 let aligned = movement.driveTowardFieldHeading(Config.GOAL_HEADING_DEGREES)
                 let carryTime = control.millis() - this.driveStartedAt
                 if (carryTime >= Config.GOAL_CARRY_MS
                     && (aligned || carryTime >= Config.GOAL_CARRY_MAX_MS)) {
-                    this.phase = 1
+                    this.phase = 2
                     this.shotStartedAt = control.millis()
                 }
                 return

@@ -9,6 +9,8 @@ namespace RobotSoccer {
         }
 
         forward() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
+        approachBall() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
+        secureBall() { this.hardware.drive(Config.BALL_SECURE_SPEED, Config.BALL_SECURE_SPEED) }
         attackForward() { this.hardware.drive(Config.ATTACK_DRIVE_SPEED, Config.ATTACK_DRIVE_SPEED) }
         reverse() { this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED) }
         turnLeft() { this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED) }

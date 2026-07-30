@@ -18,6 +18,8 @@ namespace RobotSoccer {
         export const DRIVE_TRACK_WIDTH_MM = 120
 
         export const DRIVE_SPEED = 70
+        export const BALL_SECURE_SPEED = 55
+        export const BALL_SECURE_MS = 350
         export const ATTACK_DRIVE_SPEED = 100
         export const TURN_SPEED = 75
         export const AUXILIARY_SPEED = 100
@@ -38,6 +40,7 @@ namespace RobotSoccer {
         export const GOAL_CARRY_MS = 1300
         export const GOAL_CARRY_MAX_MS = 2200
         export const SHOT_STRAIGHT_MS = 250
+        export const BALL_LOST_GRACE_MS = 400
         export const ATTACK_TIMEOUT_MS = 3200
         export const SEARCH_TIMEOUT_MS = 15000
         export const DEFEND_DURATION_MS = 2500
