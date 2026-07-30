@@ -18,7 +18,10 @@ namespace RobotSoccer {
             const target = start - degrees
             if (this.hardware.gyroAngle() <= target) return
             this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED)
-            pauseUntil(() => this.hardware.gyroAngle() <= target)
+            const timeout = this.hardware.millis() + 2000
+            while (this.hardware.gyroAngle() > target && this.hardware.millis() < timeout) {
+                pause(10)
+            }
             this.hardware.stopDrive()
         }
 
@@ -27,7 +30,10 @@ namespace RobotSoccer {
             const target = start + degrees
             if (this.hardware.gyroAngle() >= target) return
             this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED)
-            pauseUntil(() => this.hardware.gyroAngle() >= target)
+            const timeout = this.hardware.millis() + 2000
+            while (this.hardware.gyroAngle() < target && this.hardware.millis() < timeout) {
+                pause(10)
+            }
             this.hardware.stopDrive()
         }
 
@@ -37,22 +43,16 @@ namespace RobotSoccer {
             this.hardware.stopDrive()
         }
 
-
-
-        alignToGyro(target: number) {
-            const current = this.hardware.gyroAngle()
-            const error = target - current
-            
-            // Si ya estamos casi alineados (margen de 5 grados), avanzamos
-            if (Math.abs(error) < 5) {
+        driveTowardHeading(heading: number, proximity: number) {
+            if (heading == 0) {
                 this.forward()
-                return true
+                return
             }
-
-            // Giramos proporcionalmente hacia el ángulo deseado
-            const steer = error > 0 ? Config.TURN_SPEED : -Config.TURN_SPEED
-            this.hardware.drive(steer, -steer)
-            return false
+            const base = Config.DRIVE_SPEED
+            const offset = proximity > 25 ? 15 : proximity > 10 ? 8 : 4
+            const centered = heading - offset
+            const steer = Math.round(centered * 0.8)
+            this.hardware.drive(base - steer, base + steer)
         }
     }
 }
