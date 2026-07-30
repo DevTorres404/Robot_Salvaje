@@ -16,15 +16,8 @@ namespace RobotSoccer {
                 return
             }
 
-            const hasBall = snapshot.infraredProximity < 20;
-
-            if (hasBall) {
-                // Alinear al arco y empujar
-                movement.alignToGyro(0)
-            } else {
-                // Avanzar hacia la pelota
-                movement.forward()
-            }
+            // Alinear al arco y empujar la pelota
+            movement.alignToGyro(0)
         }
     }
 }
