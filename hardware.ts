@@ -44,7 +44,13 @@ namespace RobotSoccer {
         }
 
         infraredHeading() {
-            return Config.INFRARED_SENSOR.heading()
+            // Hack para acceder al modo Seek (Rastreo de Balón) que MakeCode oculta
+            const val = (Config.INFRARED_SENSOR as any).getDirectionAndDistance()
+            let heading = val & 0xFF
+            // Convertir a número con signo (-25 a 25)
+            if (heading > 127) heading -= 256
+            // Multiplicamos por 3 para que el steering sea más agresivo (aprox grados)
+            return heading * 3
         }
 
         gyroAngle() {
