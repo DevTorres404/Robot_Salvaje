@@ -14,13 +14,10 @@ Basado en la configuración actual de tu archivo `config.ts`, esta es la forma e
 *   **Puerto A:** Motor Mediano (Pateador / Dribbler / Auxiliar)
 *   **Puerto B:** Motor Grande (Rueda Izquierda)
 *   **Puerto C:** Motor Grande (Rueda Derecha)
-*   **Puerto D:** *(Vacío - No se usa por ahora)*
-
 ### 📡 Sensores (Puertos con Números)
 *   **Puerto 1:** Sensor Infrarrojo (Buscador de pelota)
 *   **Puerto 2:** Sensor Giroscópico (Navegación)
 *   **Puerto 3:** Sensor Táctil (Choques)
-*   **Puerto 4:** Sensor de Color (Líneas de la cancha)
 
 ---
 
