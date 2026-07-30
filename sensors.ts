@@ -21,11 +21,11 @@ namespace RobotSoccer {
         }
 
         ballSeen(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
+            return snapshot.infraredHeading != 0 || snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
         }
 
         ballClose(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
+            return snapshot.infraredHeading != 0 && snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
         }
     }
 }

@@ -44,10 +44,6 @@ namespace RobotSoccer {
         }
 
         driveTowardHeading(heading: number, proximity: number) {
-            if (heading == 0) {
-                this.forward()
-                return
-            }
             const base = Config.DRIVE_SPEED
             const offset = proximity > 25 ? 15 : proximity > 10 ? 8 : 4
             const centered = heading - offset
