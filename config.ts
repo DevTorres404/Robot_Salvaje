@@ -30,6 +30,7 @@ namespace RobotSoccer {
         export const SEARCH_MID_SWEEP_DEGREES = 70
         export const SEARCH_WIDE_SWEEP_DEGREES = 120
         export const SEARCH_TURN_SPEED = 50
+        export const SEARCH_DRIVE_MS = 1500
         export const SEARCH_ALIGN_TOLERANCE_DEGREES = 6
         export const BALL_ALIGN_SWEEP_DEGREES = 12
         export const BALL_VERIFY_MS = 2200

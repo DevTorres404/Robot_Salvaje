@@ -3,6 +3,7 @@ namespace RobotSoccer {
         private phase: number
         private originHeading: number
         private originSet: boolean
+        private driveStartedAt: number
 
         constructor() {
             this.reset()
@@ -12,6 +13,7 @@ namespace RobotSoccer {
             this.phase = 0
             this.originHeading = 0
             this.originSet = false
+            this.driveStartedAt = 0
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
@@ -57,7 +59,19 @@ namespace RobotSoccer {
             }
 
             if (this.phase == 6) {
-                if (movement.turnTowardFieldHeading(this.originHeading + 175)) this.reset()
+                if (movement.turnTowardFieldHeading(this.originHeading)) {
+                    this.phase = 7
+                    this.driveStartedAt = control.millis()
+                }
+                return
+            }
+
+            if (this.phase == 7) {
+                movement.forward()
+                if (control.millis() - this.driveStartedAt > Config.SEARCH_DRIVE_MS) {
+                    movement.stop()
+                    this.reset()
+                }
                 return
             }
         }
