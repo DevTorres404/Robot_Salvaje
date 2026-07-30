@@ -8,8 +8,11 @@ namespace RobotSoccer {
                 return
             }
             if (snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX) {
-                // Si ya tenemos la pelota cerca, apuntamos al arco (ángulo 0) usando el giroscopio
-                if (movement.alignToGyro(0)) {
+                // Nos alineamos hacia el arco (ángulo 0) y avanzamos
+                movement.alignToGyro(0)
+                
+                // Si vemos el color del arco, ¡pateamos!
+                if (snapshot.colorDetected == Config.GOAL_COLOR) {
                     if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 100) {
                         movement.kick()
                         this.lastKick = control.millis()
