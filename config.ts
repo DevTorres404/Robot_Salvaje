@@ -6,8 +6,9 @@ namespace RobotSoccer {
         export const AUXILIARY_MOTOR = motors.mediumA
         export const INFRARED_SENSOR = sensors.infrared1
         export const GYRO_SENSOR = sensors.gyro2
+        export const COLOR_SENSOR = sensors.color4
         export const TOUCH_SENSOR = sensors.touch3
-
+        export const FIELD_COLOR = ColorSensorColor.Green
         // Los signos adaptan la orientación mecánica de cada actuador.
         export const LEFT_MOTOR_DIRECTION = -1
         export const RIGHT_MOTOR_DIRECTION = -1
@@ -27,7 +28,7 @@ namespace RobotSoccer {
         // El IR sensor está en X=21.95, el centro del robot en X=123.8.
         // El offset ~8 compensa esa diferencia a ~300mm de distancia.
         export const IR_HEADING_OFFSET = 8
-        export const IR_BALL_SEEN_MAX = 50
+        export const IR_BALL_SEEN_MAX = 30
         export const IR_ATTACK_DISTANCE_MAX = 15
         export const LOOP_INTERVAL_MS = 100
         export const KICK_DURATION_MS = 300

@@ -3,6 +3,7 @@ namespace RobotSoccer {
         infraredProximity: number
         infraredHeading: number
         gyroAngle: number
+        detectedColor: number
         touchPressed: boolean
     }
 
@@ -14,6 +15,7 @@ namespace RobotSoccer {
                 infraredProximity: this.hardware.infraredProximity(),
                 infraredHeading: this.hardware.infraredHeading(),
                 gyroAngle: this.hardware.gyroAngle(),
+                detectedColor: this.hardware.colorDetected(),
                 touchPressed: this.hardware.touchPressed()
             }
         }
@@ -24,6 +26,10 @@ namespace RobotSoccer {
 
         ballClose(snapshot: SensorSnapshot) {
             return snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
+        }
+
+        isOnPlayableField(snapshot: SensorSnapshot) {
+            return snapshot.detectedColor === Config.FIELD_COLOR
         }
     }
 }

@@ -7,8 +7,8 @@ namespace RobotSoccer {
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
-            // Touch = gol, patear
-            if (snapshot.touchPressed) {
+            // Proximity = patear
+            if (snapshot.infraredProximity <= 5) {
                 if (control.millis() - this.lastKick > Config.KICK_DURATION_MS + 200) {
                     movement.stop()
                     movement.kick()
