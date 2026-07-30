@@ -26,6 +26,10 @@ namespace RobotSoccer {
             }
         }
 
+        cancel(movement: Movement) {
+            movement.holdBallHook()
+        }
+
         run(snapshot: SensorSnapshot, movement: Movement) {
             if (this.done) {
                 movement.stop()
@@ -36,8 +40,10 @@ namespace RobotSoccer {
                 if (this.secureStartedAt == 0) {
                     this.secureStartedAt = control.millis()
                 }
+                movement.engageBallHook()
                 movement.secureBall()
                 if (control.millis() - this.secureStartedAt >= Config.BALL_SECURE_MS) {
+                    movement.holdBallHook()
                     this.phase = 1
                     this.driveStartedAt = control.millis()
                 }

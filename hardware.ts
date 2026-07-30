@@ -4,6 +4,7 @@ namespace RobotSoccer {
         stopDrive(): void
         runAuxiliary(speed: number): void
         stopAuxiliary(): void
+        holdAuxiliary(): void
         stopAll(): void
         infraredProximity(): number
         colorDetected(): ColorSensorColor
@@ -29,6 +30,11 @@ namespace RobotSoccer {
         }
 
         stopAuxiliary() {
+            Config.AUXILIARY_MOTOR.stop()
+        }
+
+        holdAuxiliary() {
+            Config.AUXILIARY_MOTOR.setBrake(true)
             Config.AUXILIARY_MOTOR.stop()
         }
 

@@ -17,10 +17,16 @@ namespace RobotSoccer {
         turnRight() { this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED) }
         stop() { this.hardware.stopDrive() }
         drive(leftSpeed: number, rightSpeed: number) { this.hardware.drive(leftSpeed, rightSpeed) }
+        engageBallHook() {
+            this.hardware.runAuxiliary(-Config.BALL_HOOK_SPEED)
+        }
+        holdBallHook() {
+            this.hardware.holdAuxiliary()
+        }
         kick() {
             this.hardware.runAuxiliary(Config.AUXILIARY_SPEED)
             pause(Config.KICK_DURATION_MS)
-            this.hardware.stopAuxiliary()
+            this.hardware.holdAuxiliary()
         }
 
         turnLeftTime(ms: number) {
@@ -87,6 +93,18 @@ namespace RobotSoccer {
                 this.hardware.drive(Config.SEARCH_TURN_SPEED, -Config.SEARCH_TURN_SPEED)
             }
             return false
+        }
+
+        reverseTowardFieldHeading(targetDegrees: number) {
+            let error = targetDegrees - this.headingDegrees()
+            while (error > 180) error -= 360
+            while (error < -180) error += 360
+
+            let steer = Math.round(error * 0.2)
+            if (steer > Config.DEFENSE_STEER_MAX) steer = Config.DEFENSE_STEER_MAX
+            if (steer < -Config.DEFENSE_STEER_MAX) steer = -Config.DEFENSE_STEER_MAX
+            let base = -Config.DEFENSE_REVERSE_SPEED
+            this.hardware.drive(base - steer, base + steer)
         }
 
     }

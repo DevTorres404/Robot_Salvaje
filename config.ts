@@ -20,6 +20,7 @@ namespace RobotSoccer {
         export const DRIVE_SPEED = 70
         export const BALL_SECURE_SPEED = 55
         export const BALL_SECURE_MS = 350
+        export const BALL_HOOK_SPEED = 45
         export const ATTACK_DRIVE_SPEED = 100
         export const TURN_SPEED = 75
         export const AUXILIARY_SPEED = 100
@@ -43,5 +44,9 @@ namespace RobotSoccer {
         export const BALL_LOST_GRACE_MS = 400
         export const ATTACK_TIMEOUT_MS = 3200
         export const SEARCH_TIMEOUT_MS = 15000
-        export const DEFEND_DURATION_MS = 2500
+        export const DEFENSE_REVERSE_SPEED = 45
+        export const DEFENSE_STEER_MAX = 12
+        export const DEFENSE_ARC_DEGREES = 12
+        export const DEFENSE_ARC_PERIOD_MS = 600
+        export const DEFEND_DURATION_MS = 3500
     }}
