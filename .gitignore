@@ -1,6 +1,18 @@
-# MakeCode build output
+# Node
+node_modules/
+npm-debug.log*
+
+# MakeCode / PXT
+pxt_modules/
 built/
 *.uf2
 *.hex
+*.elf
 *.mkcd
 .pxt/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
