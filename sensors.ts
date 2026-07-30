@@ -36,12 +36,25 @@ namespace RobotSoccer {
         }
 
         obstacleClose(snapshot: SensorSnapshot) {
-            return snapshot.infraredProximity <= 5
+            // Evita que un obstáculo sea detectado como obstáculo si es la pelota (blanca)
+            return snapshot.infraredProximity < Config.IR_ATTACK_DISTANCE_MAX
                 && snapshot.detectedColor !== Config.BALL_COLOR
         }
 
         outOfBounds(snapshot: SensorSnapshot) {
-            return snapshot.groundColor === Config.OUT_OF_BOUNDS_COLOR
+            return snapshot.groundColor == Config.OUT_OF_BOUNDS_COLOR
+        }
+
+        inOpponentZone(snapshot: SensorSnapshot) {
+            return snapshot.groundColor == Config.OPPONENT_ZONE_COLOR
+        }
+
+        inOwnZone(snapshot: SensorSnapshot) {
+            return snapshot.groundColor == Config.OWN_ZONE_COLOR
+        }
+
+        inCornerZone(snapshot: SensorSnapshot) {
+            return snapshot.groundColor == Config.CORNER_ZONE_COLOR
         }
     }
 }

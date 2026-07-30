@@ -67,6 +67,12 @@ namespace RobotSoccer {
             }
 
             if (this.phase == 7) {
+                if (snapshot.groundColor == Config.CORNER_ZONE_COLOR) {
+                    movement.reverseTime(400)
+                    movement.turnLeftTime(300)
+                    this.reset()
+                    return
+                }
                 movement.forward()
                 if (control.millis() - this.driveStartedAt > Config.SEARCH_DRIVE_MS) {
                     movement.stop()

@@ -9,6 +9,10 @@ namespace RobotSoccer {
         export const GROUND_COLOR_SENSOR = sensors.color3
         export const BALL_COLOR = ColorSensorColor.White
         export const OUT_OF_BOUNDS_COLOR = ColorSensorColor.White
+        export const OPPONENT_ZONE_COLOR = ColorSensorColor.Yellow
+        export const OWN_ZONE_COLOR = ColorSensorColor.Blue
+        export const CORNER_ZONE_COLOR = ColorSensorColor.Black
+        export const CENTER_ZONE_COLOR = ColorSensorColor.Green
         // Los signos adaptan la orientación mecánica de cada actuador.
         export const LEFT_MOTOR_DIRECTION = -1
         export const RIGHT_MOTOR_DIRECTION = -1

@@ -31,6 +31,11 @@ namespace RobotSoccer {
         }
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
+            if (snapshot.groundColor == Config.OPPONENT_ZONE_COLOR) {
+                movement.attackForward()
+                return
+            }
+
             if (snapshot.detectedColor === Config.BALL_COLOR
                 && snapshot.infraredProximity >= 0
                 && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
@@ -82,6 +87,18 @@ namespace RobotSoccer {
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
+            if (snapshot.groundColor == Config.OPPONENT_ZONE_COLOR) {
+                // Modo GOL: Embestir con todo si estamos en el área rival y con la pelota
+                movement.attackForward()
+                return
+            }
+            if (snapshot.groundColor == Config.OWN_ZONE_COLOR && this.phase >= 1) {
+                // Modo DESPEJE: Patear la pelota inmediatamente para alejarla del arco propio
+                movement.stop()
+                movement.kick()
+                this.done = true
+                return
+            }
             if (this.done) {
                 movement.stop()
                 return
