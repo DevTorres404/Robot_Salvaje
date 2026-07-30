@@ -1,5 +1,9 @@
 namespace RobotSoccer {
     export class AttackStrategy implements Strategy {
+        private approachPhase: number
+        private approachOriginHeading: number
+        private bestBallHeading: number
+        private bestBallProximity: number
         private phase: number
         private secureStartedAt: number
         private driveStartedAt: number
@@ -7,7 +11,15 @@ namespace RobotSoccer {
         private done: boolean
 
         constructor() {
+            this.resetApproach()
             this.reset()
+        }
+
+        resetApproach() {
+            this.approachPhase = 0
+            this.approachOriginHeading = 0
+            this.bestBallHeading = 0
+            this.bestBallProximity = 101
         }
 
         reset() {
@@ -19,6 +31,41 @@ namespace RobotSoccer {
         }
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
+            if (snapshot.detectedColor === Config.BALL_COLOR
+                && snapshot.infraredProximity < this.bestBallProximity) {
+                this.bestBallProximity = snapshot.infraredProximity
+                this.bestBallHeading = movement.headingDegrees()
+            }
+
+            if (this.approachPhase == 0) {
+                this.approachOriginHeading = movement.headingDegrees()
+                this.bestBallHeading = this.approachOriginHeading
+                this.approachPhase = 1
+            }
+
+            if (this.approachPhase == 1) {
+                if (movement.turnTowardFieldHeading(
+                    this.approachOriginHeading + Config.BALL_ALIGN_SWEEP_DEGREES)) {
+                    this.approachPhase = 2
+                }
+                return
+            }
+
+            if (this.approachPhase == 2) {
+                if (movement.turnTowardFieldHeading(
+                    this.approachOriginHeading - Config.BALL_ALIGN_SWEEP_DEGREES)) {
+                    this.approachPhase = 3
+                }
+                return
+            }
+
+            if (this.approachPhase == 3) {
+                if (movement.turnTowardFieldHeading(this.bestBallHeading)) {
+                    this.approachPhase = 4
+                }
+                return
+            }
+
             if (snapshot.detectedColor === Config.BALL_COLOR) {
                 movement.approachBall()
             } else {

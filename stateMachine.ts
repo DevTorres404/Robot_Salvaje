@@ -49,8 +49,7 @@ namespace RobotSoccer {
                     this.transition(RobotState.ATTACK)
                 }
                 else if (!sensors.ballConfirmed(snapshot)
-                    && (!sensors.ballCandidate(snapshot)
-                        || this.hardware.millis() - this.enteredAt > Config.BALL_VERIFY_MS)) {
+                    && this.hardware.millis() - this.enteredAt > Config.BALL_VERIFY_MS) {
                     this.transition(RobotState.RECOVER)
                 }
             } else if (this.state == RobotState.ATTACK) {
