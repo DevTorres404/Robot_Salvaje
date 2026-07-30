@@ -7,7 +7,6 @@ namespace RobotSoccer {
         export const INFRARED_SENSOR = sensors.infrared1
         export const GYRO_SENSOR = sensors.gyro2
         export const TOUCH_SENSOR = sensors.touch3
-        export const COLOR_SENSOR = sensors.color4
 
         // Los signos adaptan la orientación mecánica de cada actuador.
         export const LEFT_MOTOR_DIRECTION = -1

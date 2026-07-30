@@ -16,7 +16,7 @@ namespace RobotSoccer {
                     }
                 }
             } else {
-                movement.driveTowardHeading(snapshot.infraredHeading, snapshot.infraredProximity)
+                movement.forward()
             }
         }
     }
