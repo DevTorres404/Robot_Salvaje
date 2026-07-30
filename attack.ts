@@ -1,25 +1,48 @@
 namespace RobotSoccer {
     export class AttackStrategy implements Strategy {
-        private lastKick: number;
+        private phase: number
+        private driveStartedAt: number
+        private done: boolean
 
         constructor() {
-            this.lastKick = -Config.ATTACK_RESET_MS;
+            this.reset()
+        }
+
+        reset() {
+            this.phase = 0
+            this.driveStartedAt = 0
+            this.done = false
+        }
+
+        approach(snapshot: SensorSnapshot, movement: Movement) {
+            movement.forward()
         }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
-            let ballControlled = snapshot.infraredProximity <= Config.IR_ATTACK_DISTANCE_MAX
-                && snapshot.detectedColor === Config.BALL_COLOR
-
-            if (ballControlled) {
-                if (control.millis() - this.lastKick > Config.ATTACK_RESET_MS) {
-                    movement.stop()
-                    movement.kick()
-                    this.lastKick = control.millis()
+            if (this.phase == 0) {
+                if (movement.driveTowardFieldHeading(Config.GOAL_HEADING_DEGREES)) {
+                    this.phase = 1
+                    this.driveStartedAt = control.millis()
                 }
                 return
             }
 
-            movement.forward()
+            if (this.phase == 1) {
+                movement.forward()
+                if (control.millis() - this.driveStartedAt >= Config.GOAL_DRIVE_MS) {
+                    movement.stop()
+                    movement.kick()
+                    this.phase = 2
+                    this.done = true
+                }
+                return
+            }
+
+            movement.stop()
+        }
+
+        finished() {
+            return this.done
         }
     }
 }

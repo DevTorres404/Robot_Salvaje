@@ -1,6 +1,12 @@
 namespace RobotSoccer {
     export class Movement {
-        constructor(private hardware: RobotHardware) {}
+        private initialLeftAngle: number
+        private initialRightAngle: number
+
+        constructor(private hardware: RobotHardware) {
+            this.initialLeftAngle = hardware.leftWheelAngle()
+            this.initialRightAngle = hardware.rightWheelAngle()
+        }
 
         forward() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
         reverse() { this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED) }
@@ -30,6 +36,36 @@ namespace RobotSoccer {
             this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED)
             pause(ms)
             this.hardware.stopDrive()
+        }
+
+        headingDegrees() {
+            let leftDegrees = this.hardware.leftWheelAngle() - this.initialLeftAngle
+            let rightDegrees = this.hardware.rightWheelAngle() - this.initialRightAngle
+            let leftDistance = leftDegrees * Config.WHEEL_CIRCUMFERENCE_MM / 360
+            let rightDistance = rightDegrees * Config.WHEEL_CIRCUMFERENCE_MM / 360
+            let heading = (rightDistance - leftDistance) / Config.DRIVE_TRACK_WIDTH_MM * 180 / Math.PI
+
+            while (heading > 180) heading -= 360
+            while (heading < -180) heading += 360
+            return heading
+        }
+
+        driveTowardFieldHeading(targetDegrees: number) {
+            let error = targetDegrees - this.headingDegrees()
+            while (error > 180) error -= 360
+            while (error < -180) error += 360
+
+            if (Math.abs(error) <= Config.GOAL_ALIGN_TOLERANCE_DEGREES) {
+                this.forward()
+                return true
+            }
+
+            let steer = Math.round(error)
+            if (steer > Config.GOAL_ALIGN_SPEED) steer = Config.GOAL_ALIGN_SPEED
+            if (steer < -Config.GOAL_ALIGN_SPEED) steer = -Config.GOAL_ALIGN_SPEED
+            let base = Math.round(Config.DRIVE_SPEED / 2)
+            this.hardware.drive(base - steer, base + steer)
+            return false
         }
 
     }

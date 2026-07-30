@@ -23,18 +23,27 @@ forever(function () {
 
     let current = stateMachine.current()
     if (control.millis() % 1000 < 100) {
-        console.log("St:" + current + " IR:" + snapshot.infraredProximity + " C:" + snapshot.detectedColor)
+        console.log("St:" + current + " IR:" + snapshot.infraredProximity
+            + " C:" + snapshot.detectedColor + " H:" + Math.round(movement.headingDegrees()))
     }
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.reset()
     }
+    if (current == RobotSoccer.RobotState.ATTACK && previousState != RobotSoccer.RobotState.ATTACK) {
+        attackStrategy.reset()
+    }
     previousState = current
 
     if (current == RobotSoccer.RobotState.SEARCH) {
         searchStrategy.run(snapshot, movement)
-    } else if (current == RobotSoccer.RobotState.APPROACH || current == RobotSoccer.RobotState.ATTACK) {
+    } else if (current == RobotSoccer.RobotState.APPROACH) {
+        attackStrategy.approach(snapshot, movement)
+    } else if (current == RobotSoccer.RobotState.ATTACK) {
         attackStrategy.run(snapshot, movement)
+        if (attackStrategy.finished()) {
+            stateMachine.transition(RobotSoccer.RobotState.SEARCH)
+        }
     } else if (current == RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.run(snapshot, movement)
     } else if (current == RobotSoccer.RobotState.RECOVER) {

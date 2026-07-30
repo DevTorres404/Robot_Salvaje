@@ -44,7 +44,7 @@ namespace RobotSoccer {
                 else if (sensors.ballClose(snapshot)) this.transition(RobotState.ATTACK)
             } else if (this.state == RobotState.ATTACK) {
                 if (!sensors.ballSeen(snapshot)) this.transition(RobotState.SEARCH)
-                else if (this.hardware.millis() - this.enteredAt > Config.ATTACK_RESET_MS) {
+                else if (this.hardware.millis() - this.enteredAt > Config.ATTACK_TIMEOUT_MS) {
                     this.transition(RobotState.SEARCH)
                 }
             } else if (this.state == RobotState.RECOVER) {
