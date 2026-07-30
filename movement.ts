@@ -17,16 +17,14 @@ namespace RobotSoccer {
             const current = this.hardware.gyroAngle()
             let diff = target - current
             
-            // Normalizar a -180..180
             while (diff > 180) diff -= 360
             while (diff < -180) diff += 360
             
-            if (Math.abs(diff) < 2) {
-                this.hardware.stopDrive()
+            if (Math.abs(diff) < 5) {
+                this.forward()
                 return
             }
             
-            // Giro proporcional
             let speed = Math.abs(diff) * 1.5
             if (speed < 10) speed = 10
             if (speed > Config.TURN_SPEED) speed = Config.TURN_SPEED
