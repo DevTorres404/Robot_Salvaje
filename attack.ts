@@ -1,6 +1,10 @@
 namespace RobotSoccer {
     export class AttackStrategy implements Strategy {
-        private lastKick = 0
+        private lastKick: number;
+
+        constructor() {
+            this.lastKick = 0;
+        }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
             if (snapshot.touchPressed) {

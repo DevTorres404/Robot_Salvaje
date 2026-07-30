@@ -1,6 +1,10 @@
 namespace RobotSoccer {
     export class RecoveryStrategy implements Strategy {
-        private done = false
+        private done: boolean;
+
+        constructor() {
+            this.done = false;
+        }
 
         run(snapshot: SensorSnapshot, movement: Movement) {
             if (this.done) return

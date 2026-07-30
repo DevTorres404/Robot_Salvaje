@@ -39,7 +39,11 @@ namespace RobotSoccer {
             Config.AUXILIARY_MOTOR.stop()
         }
 
-        private lastIrVal: number = 0;
+        private lastIrVal: number;
+
+        constructor() {
+            this.lastIrVal = 0;
+        }
 
         private updateIrSeek() {
             // Actualizamos la lectura del modo Seek solo si pasaron varios ms, o simplemente la leemos.
