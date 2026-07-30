@@ -18,9 +18,9 @@ namespace RobotSoccer {
         export const WHEEL_CIRCUMFERENCE_MM = Math.PI * WHEEL_DIAMETER_MM
         export const DRIVE_TRACK_WIDTH_MM = 120
 
-        export const DRIVE_SPEED = 35
-        export const TURN_SPEED = 25
-        export const AUXILIARY_SPEED = 40
+        export const DRIVE_SPEED = 100
+        export const TURN_SPEED = 60
+        export const AUXILIARY_SPEED = 100
         export const SEARCH_TURN_MS = 350
         export const RECOVERY_REVERSE_MS = 450
         export const RECOVERY_TURN_MS = 300
