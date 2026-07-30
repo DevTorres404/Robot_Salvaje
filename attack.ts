@@ -32,6 +32,8 @@ namespace RobotSoccer {
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
             if (snapshot.detectedColor === Config.BALL_COLOR
+                && snapshot.infraredProximity >= 0
+                && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
                 && snapshot.infraredProximity < this.bestBallProximity) {
                 this.bestBallProximity = snapshot.infraredProximity
                 this.bestBallHeading = movement.headingDegrees()
@@ -66,7 +68,9 @@ namespace RobotSoccer {
                 return
             }
 
-            if (snapshot.detectedColor === Config.BALL_COLOR) {
+            if (snapshot.detectedColor === Config.BALL_COLOR
+                && snapshot.infraredProximity >= 0
+                && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX) {
                 movement.approachBall()
             } else {
                 movement.stop()

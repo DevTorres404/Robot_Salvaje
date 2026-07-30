@@ -21,6 +21,7 @@ namespace RobotSoccer {
 
         ballConfirmed(snapshot: SensorSnapshot) {
             return snapshot.detectedColor === Config.BALL_COLOR
+                && this.ballCandidate(snapshot)
         }
 
         ballSeen(snapshot: SensorSnapshot) {
