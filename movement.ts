@@ -36,5 +36,11 @@ namespace RobotSoccer {
             pause(ms)
             this.hardware.stopDrive()
         }
+
+        driveTowardHeading(heading: number) {
+            const base = Config.DRIVE_SPEED
+            const steer = Math.round(heading * 0.8)
+            this.hardware.drive(base - steer, base + steer)
+        }
     }
 }

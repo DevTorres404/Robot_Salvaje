@@ -6,6 +6,7 @@ namespace RobotSoccer {
         stopAuxiliary(): void
         stopAll(): void
         infraredProximity(): number
+        infraredHeading(): number
         gyroAngle(): number
         touchPressed(): boolean
         colorDetected(): number
@@ -40,6 +41,10 @@ namespace RobotSoccer {
 
         infraredProximity() {
             return Config.INFRARED_SENSOR.proximity()
+        }
+
+        infraredHeading() {
+            return Config.INFRARED_SENSOR.heading()
         }
 
         gyroAngle() {
