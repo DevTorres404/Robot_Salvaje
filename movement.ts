@@ -9,6 +9,7 @@ namespace RobotSoccer {
         }
 
         forward() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
+        attackForward() { this.hardware.drive(Config.ATTACK_DRIVE_SPEED, Config.ATTACK_DRIVE_SPEED) }
         reverse() { this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED) }
         turnLeft() { this.hardware.drive(-Config.TURN_SPEED, Config.TURN_SPEED) }
         turnRight() { this.hardware.drive(Config.TURN_SPEED, -Config.TURN_SPEED) }
@@ -56,14 +57,14 @@ namespace RobotSoccer {
             while (error < -180) error += 360
 
             if (Math.abs(error) <= Config.GOAL_ALIGN_TOLERANCE_DEGREES) {
-                this.forward()
+                this.attackForward()
                 return true
             }
 
-            let steer = Math.round(error)
+            let steer = Math.round(error * 0.25)
             if (steer > Config.GOAL_ALIGN_SPEED) steer = Config.GOAL_ALIGN_SPEED
             if (steer < -Config.GOAL_ALIGN_SPEED) steer = -Config.GOAL_ALIGN_SPEED
-            let base = Math.round(Config.DRIVE_SPEED / 2)
+            let base = Config.ATTACK_DRIVE_SPEED - Config.GOAL_ALIGN_SPEED
             this.hardware.drive(base - steer, base + steer)
             return false
         }
