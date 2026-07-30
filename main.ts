@@ -23,10 +23,10 @@ forever(function () {
 
     let current = stateMachine.current()
 
-    brick.showString("State: " + current, 1)
-    brick.showString("IR H: " + snapshot.infraredHeading, 2)
-    brick.showString("IR P: " + snapshot.infraredProximity, 3)
-    brick.showString("Touch: " + snapshot.touchPressed, 4)
+    console.log("State: " + current)
+    console.log("IR H: " + snapshot.infraredHeading)
+    console.log("IR P: " + snapshot.infraredProximity)
+    console.log("Touch: " + snapshot.touchPressed)
 
     if (current == RobotSoccer.RobotState.RECOVER && previousState != RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.reset()
