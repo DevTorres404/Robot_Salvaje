@@ -34,7 +34,9 @@ namespace RobotSoccer {
         export const SEARCH_ALIGN_TOLERANCE_DEGREES = 6
         export const BALL_ALIGN_SWEEP_DEGREES = 12
         export const BALL_VERIFY_MS = 2200
-        export const RECOVERY_REVERSE_MS = 325
+        export const RUSH_TIMEOUT_MS = 1500
+        export const RECOVERY_SPEED = 100
+        export const RECOVERY_REVERSE_MS = 600
         export const RECOVERY_TURN_MS = 240
         export const IR_BALL_SEEN_MAX = 45
         export const IR_ATTACK_DISTANCE_MAX = 15

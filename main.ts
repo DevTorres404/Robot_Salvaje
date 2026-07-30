@@ -2,6 +2,7 @@ let hardware = new RobotSoccer.EV3RobotHardware()
 let movement = new RobotSoccer.Movement(hardware)
 let sensorsRuntime = new RobotSoccer.Sensors(hardware)
 let stateMachine = new RobotSoccer.StateMachine(hardware)
+let rushStrategy = new RobotSoccer.RushStrategy()
 let searchStrategy = new RobotSoccer.SearchStrategy()
 let attackStrategy = new RobotSoccer.AttackStrategy()
 let defenseStrategy = new RobotSoccer.DefenseStrategy()
@@ -48,7 +49,9 @@ forever(function () {
     }
     previousState = current
 
-    if (current == RobotSoccer.RobotState.SEARCH) {
+    if (current == RobotSoccer.RobotState.RUSH) {
+        rushStrategy.run(snapshot, movement)
+    } else if (current == RobotSoccer.RobotState.SEARCH) {
         searchStrategy.run(snapshot, movement)
     } else if (current == RobotSoccer.RobotState.APPROACH) {
         attackStrategy.approach(snapshot, movement)

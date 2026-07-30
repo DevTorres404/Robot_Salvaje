@@ -42,13 +42,13 @@ namespace RobotSoccer {
         }
 
         reverseTime(ms: number) {
-            this.hardware.drive(-Config.DRIVE_SPEED, -Config.DRIVE_SPEED)
+            this.hardware.drive(-Config.RECOVERY_SPEED, -Config.RECOVERY_SPEED)
             pause(ms)
             this.hardware.stopDrive()
         }
 
         forwardTime(ms: number) {
-            this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED)
+            this.hardware.drive(Config.RECOVERY_SPEED, Config.RECOVERY_SPEED)
             pause(ms)
             this.hardware.stopDrive()
         }

@@ -1,6 +1,7 @@
 namespace RobotSoccer {
     export enum RobotState {
         INIT,
+        RUSH,
         SEARCH,
         APPROACH,
         ATTACK,
@@ -52,7 +53,11 @@ namespace RobotSoccer {
                 this.transition(RobotState.RECOVER)
             }
 
-            if (this.state == RobotState.INIT) this.transition(RobotState.SEARCH)
+            if (this.state == RobotState.INIT) this.transition(RobotState.RUSH)
+            else if (this.state == RobotState.RUSH) {
+                if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
+                else if (this.hardware.millis() - this.enteredAt > Config.RUSH_TIMEOUT_MS) this.transition(RobotState.SEARCH)
+            }
             else if (this.state == RobotState.SEARCH) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
                 else if (this.hardware.millis() - this.enteredAt > Config.SEARCH_TIMEOUT_MS) this.transition(RobotState.DEFEND)
