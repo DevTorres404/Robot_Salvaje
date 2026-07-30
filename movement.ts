@@ -68,5 +68,23 @@ namespace RobotSoccer {
             return false
         }
 
+        turnTowardFieldHeading(targetDegrees: number) {
+            let error = targetDegrees - this.headingDegrees()
+            while (error > 180) error -= 360
+            while (error < -180) error += 360
+
+            if (Math.abs(error) <= Config.SEARCH_ALIGN_TOLERANCE_DEGREES) {
+                this.stop()
+                return true
+            }
+
+            if (error > 0) {
+                this.hardware.drive(-Config.SEARCH_TURN_SPEED, Config.SEARCH_TURN_SPEED)
+            } else {
+                this.hardware.drive(Config.SEARCH_TURN_SPEED, -Config.SEARCH_TURN_SPEED)
+            }
+            return false
+        }
+
     }
 }

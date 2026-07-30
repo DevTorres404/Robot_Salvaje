@@ -4,9 +4,7 @@ namespace RobotSoccer {
             if (snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX) {
                 movement.forward()
             } else {
-                let cycle = control.millis() % 2400
-                if (cycle < 1200) movement.turnLeft()
-                else movement.turnRight()
+                movement.turnTowardFieldHeading(Config.GOAL_HEADING_DEGREES)
             }
         }
     }

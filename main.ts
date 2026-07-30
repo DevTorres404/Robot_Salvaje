@@ -33,6 +33,9 @@ forever(function () {
     if (current == RobotSoccer.RobotState.ATTACK && previousState != RobotSoccer.RobotState.ATTACK) {
         attackStrategy.reset()
     }
+    if (current == RobotSoccer.RobotState.SEARCH && previousState != RobotSoccer.RobotState.SEARCH) {
+        searchStrategy.reset()
+    }
     previousState = current
 
     if (current == RobotSoccer.RobotState.SEARCH) {
