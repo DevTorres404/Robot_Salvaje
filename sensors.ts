@@ -3,6 +3,7 @@ namespace RobotSoccer {
         infraredProximity: number
         gyroAngle: number
         touchPressed: boolean
+        colorDetected: number
     }
 
     export class Sensors {
@@ -12,7 +13,8 @@ namespace RobotSoccer {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
                 gyroAngle: this.hardware.gyroAngle(),
-                touchPressed: this.hardware.touchPressed()
+                touchPressed: this.hardware.touchPressed(),
+                colorDetected: this.hardware.colorDetected()
             }
         }
 

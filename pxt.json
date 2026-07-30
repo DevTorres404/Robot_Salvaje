@@ -7,7 +7,8 @@
         "core": "*",
         "infrared-sensor": "*",
         "touch-sensor": "*",
-        "gyro-sensor": "*"
+        "gyro-sensor": "*",
+        "color-sensor": "*"
     },
     "files": [
         "main.ts",
