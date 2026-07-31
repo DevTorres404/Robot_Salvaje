@@ -20,6 +20,7 @@
         "search.ts",
         "rush.ts",
         "recovery.ts",
+        "kamikaze.ts",
         "stateMachine.ts",
         "assets.json"
     ],
