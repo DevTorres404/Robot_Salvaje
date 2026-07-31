@@ -67,12 +67,17 @@ namespace RobotSoccer {
             }
 
             if (this.phase == 7) {
-                if (snapshot.groundColor == Config.CORNER_ZONE_COLOR) {
+                let obstacleAhead = snapshot.detectedColor == ColorSensorColor.Black || 
+                                    snapshot.detectedColor == Config.OPPONENT_ZONE_COLOR || 
+                                    snapshot.detectedColor == Config.OWN_ZONE_COLOR
+
+                if (obstacleAhead || snapshot.groundColor == Config.CORNER_ZONE_COLOR) {
                     movement.reverseTime(400)
-                    movement.turnLeftTime(300)
+                    movement.turnLeftTime(400)
                     this.reset()
                     return
                 }
+                
                 movement.forward()
                 if (control.millis() - this.driveStartedAt > Config.SEARCH_DRIVE_MS) {
                     movement.stop()
