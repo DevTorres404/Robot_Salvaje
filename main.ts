@@ -51,9 +51,6 @@ forever(function () {
     if (current == RobotSoccer.RobotState.DEFEND && previousState != RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.reset()
     }
-    if (current == RobotSoccer.RobotState.KAMIKAZE && previousState != RobotSoccer.RobotState.KAMIKAZE) {
-        kamikazeStrategy.reset()
-    }
     previousState = current
 
     if (current == RobotSoccer.RobotState.RUSH) {
