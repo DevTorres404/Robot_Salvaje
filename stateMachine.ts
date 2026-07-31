@@ -46,14 +46,31 @@ namespace RobotSoccer {
             }
 
             // Los sensores son frontales: proximidad extrema sin blanco indica un obstáculo.
-            // Si ve un obstáculo, asumimos que es el rival y vamos modo KAMIKAZE.
             if (sensors.obstacleClose(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
                 && this.state != RobotState.ATTACK
                 && this.state != RobotState.KAMIKAZE
                 && this.state != RobotState.RECOVER) {
-                this.transition(RobotState.KAMIKAZE)
+                
+                // Distinguir entre rival (kamikaze) y pared/arco (esquivar)
+                // Si el sensor frontal ve los colores del arco (Amarillo/Azul) o de la pared (Negro)
+                let isWallOrGoal = snapshot.detectedColor == Config.OPPONENT_ZONE_COLOR ||
+                                   snapshot.detectedColor == Config.OWN_ZONE_COLOR ||
+                                   snapshot.detectedColor == ColorSensorColor.Black
+
+                // O si el piso indica que estamos en los bordes
+                let atEdge = snapshot.groundColor == Config.CORNER_ZONE_COLOR ||
+                             snapshot.groundColor == Config.OUT_OF_BOUNDS_COLOR
+
+                if (isWallOrGoal || atEdge) {
+                    // Es la pared o el arco: retroceder y esquivar
+                    this.recoveryForward = false
+                    this.transition(RobotState.RECOVER)
+                } else {
+                    // No es pared ni arco: ¡es el enemigo!
+                    this.transition(RobotState.KAMIKAZE)
+                }
             }
 
             if (this.state == RobotState.INIT) this.transition(RobotState.RUSH)
