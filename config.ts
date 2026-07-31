@@ -60,5 +60,5 @@ namespace RobotSoccer {
         export const DEFENSE_STEER_MAX = 12
         export const DEFENSE_ARC_DEGREES = 12
         export const DEFENSE_ARC_PERIOD_MS = 600
-        export const DEFEND_DURATION_MS = 3500
+        export const DEFEND_DURATION_MS = 10000
     }}

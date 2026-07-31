@@ -81,6 +81,10 @@ namespace RobotSoccer {
                 }
             } else if (this.state == RobotState.DEFEND) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
+                else if (sensors.inOwnZone(snapshot)) {
+                    // Ya está en su propia área protegida, pasa a buscar
+                    this.transition(RobotState.SEARCH)
+                }
                 else if (this.hardware.millis() - this.enteredAt > Config.DEFEND_DURATION_MS) {
                     this.transition(RobotState.SEARCH)
                 }
