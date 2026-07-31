@@ -58,6 +58,7 @@ namespace RobotSoccer {
             if (this.state == RobotState.INIT) this.transition(RobotState.RUSH)
             else if (this.state == RobotState.RUSH) {
                 if (sensors.ballSeen(snapshot)) this.transition(RobotState.APPROACH)
+                else if (sensors.inOpponentZone(snapshot)) this.transition(RobotState.SEARCH)
                 else if (this.hardware.millis() - this.enteredAt > Config.RUSH_TIMEOUT_MS) this.transition(RobotState.SEARCH)
             }
             else if (this.state == RobotState.SEARCH) {
