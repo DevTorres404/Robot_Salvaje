@@ -14,6 +14,13 @@ El robot utiliza el sensor de color apuntando al suelo para saber en qué parte 
 
 ---
 
+## Controles Manuales (Botones del Ladrillo EV3)
+- **Botón Abajo (`buttonDown`)**: Resetea el giroscopio interno y activa el estado `INIT` (lo cual dispara el `RUSH`). **Muy útil para cuando el simulador (VRT) teletransporta el robot al centro tras un gol o salida de cancha**.
+- **Botón Arriba (`buttonUp`)**: Fuerza al robot a entrar en estado `SEARCH`.
+- **Botón Enter (`buttonEnter`)**: Fuerza al robot a entrar en estado `STOP` y detiene todos los motores.
+
+---
+
 ## Estados del Robot
 
 ### 1. INIT (Inicio)
@@ -57,9 +64,16 @@ El robot utiliza el sensor de color apuntando al suelo para saber en qué parte 
   - Si pisa su zona Azul (`OWN_ZONE`), frena el retroceso y pasa a `SEARCH` desde una posición segura.
   - Si pasan los 10 segundos, frena y pasa a `SEARCH`.
 
-### 7. RECOVER (Maniobra Evasiva)
-- **Acción**: Es un estado de emergencia. Si el robot pisa la línea Blanca (fuera de límites), o si el **sensor infrarrojo principal** detecta un obstáculo muy cerca de frente que no es blanco (como la pared negra o el otro robot), el robot retrocede violentamente a máxima velocidad (`RECOVERY_SPEED`) durante una fracción de segundo y luego da un giro rápido para salir del peligro.
+### 7. RECOVER (Maniobra Evasiva para Paredes y Arcos)
+- **Acción**: Es un estado de emergencia. Se activa cuando el robot pisa la línea Blanca (fuera de límites) o cuando el **sensor infrarrojo principal** detecta un obstáculo y el robot verifica que es una pared o el arco (leyendo colores Negro, Azul o Amarillo, o tocando los bordes con el sensor de piso). El robot retrocede violentamente a máxima velocidad (`RECOVERY_SPEED`) durante una fracción de segundo y luego da un giro rápido para salir del peligro sin quedarse atascado.
 - **Transición**: Automáticamente pasa a `SEARCH` una vez finalizada la maniobra.
+
+### 8. KAMIKAZE (Ataque al Rival)
+- **Acción**: Si el **sensor infrarrojo principal** detecta un obstáculo muy cerca de frente, pero el robot verifica que **no es la pared ni el arco** (es decir, está en la zona Verde y no lee colores de los bordes/arcos), asume que chocó contra el robot enemigo. Acelera hacia adelante a máxima velocidad y activa el motor auxiliar para intentar robarle la pelota.
+- **Transiciones**:
+  - Si durante el choque logra ver la pelota blanca, pasa a `APPROACH`.
+  - Si el sensor de piso toca un borde (Negro o Blanco) o el sensor frontal llega a leer el color de la pared/arco, aborta el ataque inmediatamente y pasa a `RECOVER`.
+  - Si pasan 2.5 segundos sin ver la pelota, aborta y pasa a `RECOVER`.
 
 ---
 *Este documento resume la lógica principal de `stateMachine.ts`, `sensors.ts` y las estrategias de cada fase.*
