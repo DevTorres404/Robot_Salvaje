@@ -3,6 +3,7 @@ namespace RobotSoccer {
         infraredProximity: number
         detectedColor: ColorSensorColor
         groundColor: ColorSensorColor
+        obstacleDistance: number
     }
 
     export class Sensors {
@@ -12,7 +13,8 @@ namespace RobotSoccer {
             return {
                 infraredProximity: this.hardware.infraredProximity(),
                 detectedColor: this.hardware.colorDetected(),
-                groundColor: this.hardware.groundColorDetected()
+                groundColor: this.hardware.groundColorDetected(),
+                obstacleDistance: this.hardware.obstacleDistance()
             }
         }
 
@@ -36,8 +38,10 @@ namespace RobotSoccer {
         }
 
         obstacleClose(snapshot: SensorSnapshot) {
-            // Evita que un obstáculo sea detectado como obstáculo si es la pelota (blanca)
-            return snapshot.infraredProximity < Config.IR_ATTACK_DISTANCE_MAX
+            // El sensor de obstáculos ultrasónico está montado más alto (puerto 4)
+            // Un valor válido mayor a 0 y menor al umbral indica un obstáculo
+            return snapshot.obstacleDistance > 0
+                && snapshot.obstacleDistance <= Config.OBSTACLE_DISTANCE_MAX_CM
                 && snapshot.detectedColor !== Config.BALL_COLOR
         }
 

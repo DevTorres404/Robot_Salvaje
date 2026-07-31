@@ -7,6 +7,7 @@ namespace RobotSoccer {
         export const INFRARED_SENSOR = sensors.infrared1
         export const COLOR_SENSOR = sensors.color2
         export const GROUND_COLOR_SENSOR = sensors.color3
+        export const OBSTACLE_SENSOR = sensors.ultrasonic4
         export const BALL_COLOR = ColorSensorColor.White
         export const OUT_OF_BOUNDS_COLOR = ColorSensorColor.White
         export const OPPONENT_ZONE_COLOR = ColorSensorColor.Yellow
@@ -44,6 +45,7 @@ namespace RobotSoccer {
         export const RECOVERY_TURN_MS = 240
         export const IR_BALL_SEEN_MAX = 45
         export const IR_ATTACK_DISTANCE_MAX = 15
+        export const OBSTACLE_DISTANCE_MAX_CM = 15
         export const LOOP_INTERVAL_MS = 40
         export const KICK_DURATION_MS = 300
         // El rumbo 0 se registra al iniciar: el robot debe comenzar mirando al arco rival.
