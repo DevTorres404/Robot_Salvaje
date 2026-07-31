@@ -49,8 +49,7 @@ namespace RobotSoccer {
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
                 && this.state != RobotState.ATTACK
-                && this.state != RobotState.RECOVER
-                && this.state != RobotState.RUSH) {
+                && this.state != RobotState.RECOVER) {
                 this.recoveryForward = false
                 this.transition(RobotState.RECOVER)
             }
