@@ -21,7 +21,7 @@ El robot utiliza el sensor de color apuntando al suelo para saber en qué parte 
 - **Transición**: Automáticamente pasa al estado `RUSH`.
 
 ### 2. RUSH (Ataque Kamikaze Inicial)
-- **Acción**: El robot arranca los motores a velocidad máxima en línea recta hacia adelante. Este ataque inicial dura un máximo de 4 segundos. Durante este estado, el robot **ignora** la línea blanca de fuera de límites (para poder salir del círculo central).
+- **Acción**: El robot arranca los motores a velocidad máxima en línea recta hacia adelante, pero **utilizando una corrección giroscópica** (a través de la rotación de las ruedas) para mantener siempre el rumbo exacto de 0° (apuntando al arco rival) y evitar desviarse. Este ataque inicial dura un máximo de 4 segundos. Durante este estado, el robot **ignora** la línea blanca de fuera de límites (para poder salir del círculo central).
 - **Transiciones**:
   - Si choca físicamente contra algo (ej. el otro robot), pasa a `RECOVER`.
   - Si llega a la zona Amarilla (arco rival), frena el pique y pasa a `SEARCH`.
@@ -58,7 +58,7 @@ El robot utiliza el sensor de color apuntando al suelo para saber en qué parte 
   - Si pasan los 10 segundos, frena y pasa a `SEARCH`.
 
 ### 7. RECOVER (Maniobra Evasiva)
-- **Acción**: Es un estado de emergencia. Si el robot pisa la línea Blanca (fuera de límites), o si choca de frente contra un obstáculo negro (como una pared), el robot retrocede violentamente a máxima velocidad (`RECOVERY_SPEED`) durante una fracción de segundo y luego da un giro rápido para salir del peligro.
+- **Acción**: Es un estado de emergencia. Si el robot pisa la línea Blanca (fuera de límites), o si el **sensor infrarrojo principal** detecta un obstáculo muy cerca de frente que no es blanco (como la pared negra o el otro robot), el robot retrocede violentamente a máxima velocidad (`RECOVERY_SPEED`) durante una fracción de segundo y luego da un giro rápido para salir del peligro.
 - **Transición**: Automáticamente pasa a `SEARCH` una vez finalizada la maniobra.
 
 ---
