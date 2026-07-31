@@ -67,7 +67,7 @@ forever(function () {
     } else if (current == RobotSoccer.RobotState.ATTACK) {
         attackStrategy.run(snapshot, movement)
         if (attackStrategy.finished()) {
-            stateMachine.transition(RobotSoccer.RobotState.SEARCH)
+            stateMachine.transition(RobotSoccer.RobotState.DEFEND)
         }
     } else if (current == RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.run(snapshot, movement)
