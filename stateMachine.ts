@@ -112,11 +112,21 @@ namespace RobotSoccer {
                     this.transition(RobotState.SEARCH)
                 }
             } else if (this.state == RobotState.KAMIKAZE) {
+                let isWallOrGoal = snapshot.detectedColor == Config.OPPONENT_ZONE_COLOR ||
+                                   snapshot.detectedColor == Config.OWN_ZONE_COLOR ||
+                                   snapshot.detectedColor == ColorSensorColor.Black
+                let atEdge = sensors.inCornerZone(snapshot) || sensors.outOfBounds(snapshot)
+
+                // Si descubrimos que estábamos empujando la pared o el arco, abortamos de inmediato
+                if (isWallOrGoal || atEdge) {
+                    this.recoveryForward = false
+                    this.transition(RobotState.RECOVER)
+                }
                 // Si encontramos la pelota mientras embestimos, la agarramos
-                if (sensors.ballSeen(snapshot)) {
+                else if (sensors.ballSeen(snapshot)) {
                     this.transition(RobotState.APPROACH)
                 }
-                // Si pasa el timeout y no vimos la pelota, probablemente era una pared. Recuperar.
+                // Si pasa el timeout y no vimos la pelota, probablemente era una pared invisible. Recuperar.
                 else if (this.hardware.millis() - this.enteredAt > Config.KAMIKAZE_TIMEOUT_MS) {
                     this.recoveryForward = false
                     this.transition(RobotState.RECOVER)
