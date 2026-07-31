@@ -7,6 +7,7 @@ namespace RobotSoccer {
         ATTACK,
         DEFEND,
         RECOVER,
+        KAMIKAZE,
         STOP,
         ERROR
     }
@@ -45,13 +46,14 @@ namespace RobotSoccer {
             }
 
             // Los sensores son frontales: proximidad extrema sin blanco indica un obstáculo.
+            // Si ve un obstáculo, asumimos que es el rival y vamos modo KAMIKAZE.
             if (sensors.obstacleClose(snapshot)
                 && this.state != RobotState.STOP
                 && this.state != RobotState.ERROR
                 && this.state != RobotState.ATTACK
+                && this.state != RobotState.KAMIKAZE
                 && this.state != RobotState.RECOVER) {
-                this.recoveryForward = false
-                this.transition(RobotState.RECOVER)
+                this.transition(RobotState.KAMIKAZE)
             }
 
             if (this.state == RobotState.INIT) this.transition(RobotState.RUSH)
@@ -91,6 +93,16 @@ namespace RobotSoccer {
             } else if (this.state == RobotState.RECOVER) {
                 if (this.hardware.millis() - this.enteredAt > Config.RECOVERY_REVERSE_MS + Config.RECOVERY_TURN_MS) {
                     this.transition(RobotState.SEARCH)
+                }
+            } else if (this.state == RobotState.KAMIKAZE) {
+                // Si encontramos la pelota mientras embestimos, la agarramos
+                if (sensors.ballSeen(snapshot)) {
+                    this.transition(RobotState.APPROACH)
+                }
+                // Si pasa el timeout y no vimos la pelota, probablemente era una pared. Recuperar.
+                else if (this.hardware.millis() - this.enteredAt > Config.KAMIKAZE_TIMEOUT_MS) {
+                    this.recoveryForward = false
+                    this.transition(RobotState.RECOVER)
                 }
             }
 

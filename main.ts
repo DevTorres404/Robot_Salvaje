@@ -7,6 +7,7 @@ let searchStrategy = new RobotSoccer.SearchStrategy()
 let attackStrategy = new RobotSoccer.AttackStrategy()
 let defenseStrategy = new RobotSoccer.DefenseStrategy()
 let recoveryStrategy = new RobotSoccer.RecoveryStrategy()
+let kamikazeStrategy = new RobotSoccer.KamikazeStrategy()
 let previousState = RobotSoccer.RobotState.INIT
 
 brick.buttonEnter.onEvent(ButtonEvent.Pressed, function () {
@@ -50,6 +51,9 @@ forever(function () {
     if (current == RobotSoccer.RobotState.DEFEND && previousState != RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.reset()
     }
+    if (current == RobotSoccer.RobotState.KAMIKAZE && previousState != RobotSoccer.RobotState.KAMIKAZE) {
+        kamikazeStrategy.reset()
+    }
     previousState = current
 
     if (current == RobotSoccer.RobotState.RUSH) {
@@ -65,6 +69,8 @@ forever(function () {
         }
     } else if (current == RobotSoccer.RobotState.DEFEND) {
         defenseStrategy.run(snapshot, movement)
+    } else if (current == RobotSoccer.RobotState.KAMIKAZE) {
+        kamikazeStrategy.run(snapshot, movement)
     } else if (current == RobotSoccer.RobotState.RECOVER) {
         recoveryStrategy.run(snapshot, movement)
     }
