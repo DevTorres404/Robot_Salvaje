@@ -19,6 +19,11 @@ brick.buttonUp.onEvent(ButtonEvent.Pressed, function () {
     stateMachine.transition(RobotSoccer.RobotState.SEARCH)
 })
 
+brick.buttonDown.onEvent(ButtonEvent.Pressed, function () {
+    movement.resetHeading()
+    stateMachine.transition(RobotSoccer.RobotState.INIT)
+})
+
 // Warmup delay para que los sensores de VRT se inicialicen correctamente
 pause(500)
 

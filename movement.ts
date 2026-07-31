@@ -4,8 +4,12 @@ namespace RobotSoccer {
         private initialRightAngle: number
 
         constructor(private hardware: RobotHardware) {
-            this.initialLeftAngle = hardware.leftWheelAngle()
-            this.initialRightAngle = hardware.rightWheelAngle()
+            this.resetHeading()
+        }
+
+        resetHeading() {
+            this.initialLeftAngle = this.hardware.leftWheelAngle()
+            this.initialRightAngle = this.hardware.rightWheelAngle()
         }
 
         forward() { this.hardware.drive(Config.DRIVE_SPEED, Config.DRIVE_SPEED) }
