@@ -31,11 +31,6 @@ namespace RobotSoccer {
         }
 
         approach(snapshot: SensorSnapshot, movement: Movement) {
-            if (snapshot.groundColor == Config.OPPONENT_ZONE_COLOR) {
-                movement.attackForward()
-                return
-            }
-
             if (snapshot.detectedColor === Config.BALL_COLOR
                 && snapshot.infraredProximity >= 0
                 && snapshot.infraredProximity <= Config.IR_BALL_SEEN_MAX
@@ -90,6 +85,10 @@ namespace RobotSoccer {
             if (snapshot.groundColor == Config.OPPONENT_ZONE_COLOR) {
                 // Modo GOL: Embestir con todo si estamos en el área rival y con la pelota
                 movement.attackForward()
+                if (this.driveStartedAt == 0) this.driveStartedAt = control.millis()
+                if (control.millis() - this.driveStartedAt > 2000) {
+                    this.done = true
+                }
                 return
             }
             if (snapshot.groundColor == Config.OWN_ZONE_COLOR && this.phase >= 1) {

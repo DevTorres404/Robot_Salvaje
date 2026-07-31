@@ -59,17 +59,19 @@ namespace RobotSoccer {
                                    snapshot.detectedColor == Config.OWN_ZONE_COLOR ||
                                    snapshot.detectedColor == ColorSensorColor.Black
 
-                // O si el piso indica que estamos en los bordes
                 let atEdge = snapshot.groundColor == Config.CORNER_ZONE_COLOR ||
                              snapshot.groundColor == Config.OUT_OF_BOUNDS_COLOR
 
-                if (isWallOrGoal || atEdge) {
-                    // Es la pared o el arco: retroceder y esquivar
+                let inCenter = snapshot.groundColor == Config.CENTER_ZONE_COLOR
+                let inOpponentZone = snapshot.groundColor == Config.OPPONENT_ZONE_COLOR
+
+                if (inCenter || inOpponentZone || (!isWallOrGoal && !atEdge)) {
+                    // ¡Es el enemigo o el arco rival! Embestir.
+                    this.transition(RobotState.KAMIKAZE)
+                } else {
+                    // Es nuestra pared o nuestro arco: retroceder y esquivar
                     this.recoveryForward = false
                     this.transition(RobotState.RECOVER)
-                } else {
-                    // No es pared ni arco: ¡es el enemigo!
-                    this.transition(RobotState.KAMIKAZE)
                 }
             }
 
@@ -116,9 +118,12 @@ namespace RobotSoccer {
                                    snapshot.detectedColor == Config.OWN_ZONE_COLOR ||
                                    snapshot.detectedColor == ColorSensorColor.Black
                 let atEdge = sensors.inCornerZone(snapshot) || sensors.outOfBounds(snapshot)
+                
+                let inCenter = snapshot.groundColor == Config.CENTER_ZONE_COLOR
+                let inOpponentZone = snapshot.groundColor == Config.OPPONENT_ZONE_COLOR
 
-                // Si descubrimos que estábamos empujando la pared o el arco, abortamos de inmediato
-                if (isWallOrGoal || atEdge) {
+                // Si descubrimos que estábamos empujando NUESTRA pared o arco, abortamos de inmediato
+                if (!inCenter && !inOpponentZone && (isWallOrGoal || atEdge)) {
                     this.recoveryForward = false
                     this.transition(RobotState.RECOVER)
                 }
